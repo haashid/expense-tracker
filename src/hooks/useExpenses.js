@@ -87,8 +87,13 @@ export function useExpenses(filters = {}) {
           payload.bill_screenshot_url = publicUrl;
         }
 
-        const { error: insertError } = await supabase.from('expenses').insert([payload]);
-        if (insertError) throw insertError;
+        const insertQuery = supabase.from('expenses').insert([payload]);
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Database connection timed out. Your network might be blocking Supabase.')), 5000);
+        });
+
+        const result = await Promise.race([insertQuery, timeoutPromise]);
+        if (result.error) throw result.error;
         await fetchExpenses();
       } else {
         const { error: mockInsertErr } = await mockService.expenses.insert(expenseData, paymentFile, billFile);
