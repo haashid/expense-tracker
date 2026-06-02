@@ -13,6 +13,14 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let mounted = true;
 
+    // Safety net: Force loading to stop after 3 seconds no matter what
+    const safetyTimeout = setTimeout(() => {
+      if (mounted) {
+        console.warn('Auth initialization took too long, forcing load complete.');
+        setLoading(false);
+      }
+    }, 3000);
+
     async function initializeAuth() {
       try {
         if (isSupabaseConfigured) {
@@ -76,6 +84,7 @@ export function AuthProvider({ children }) {
 
     return () => {
       mounted = false;
+      clearTimeout(safetyTimeout);
       if (subscription) subscription.unsubscribe();
     };
   }, []);
