@@ -54,15 +54,18 @@ export default function Login() {
       const result = await signInWithGoogle();
       if (result?.error) {
         setError(result.error.message || 'Google Login failed. Please ensure the Google provider is enabled in your Supabase dashboard.');
+        setLoading(false);
       } else {
-        // If we are in mock mode, signInWithGoogle resolves without a browser redirect. 
-        // We must manually navigate to the dashboard.
-        navigate('/');
+        // If we are in mock mode, it returns the session immediately. We must manually navigate.
+        // If we are using real Supabase, it returns { data: { provider, url } } and automatically redirects the browser.
+        // We MUST NOT call navigate('/') if we are using real Supabase, as it will cancel the browser redirect!
+        if (result?.data?.user) {
+          navigate('/');
+        }
       }
     } catch (err) {
       setError(err.message || 'An unexpected error occurred. Check the console for details.');
       console.error(err);
-    } finally {
       setLoading(false);
     }
   };
