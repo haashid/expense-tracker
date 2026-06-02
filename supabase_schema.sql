@@ -79,30 +79,37 @@ CREATE TRIGGER expenses_updated_at
 -- ==========================================
 
 -- Profiles Read & Update Policies
+DROP POLICY IF EXISTS "Users can read all profiles" ON public.profiles;
 CREATE POLICY "Users can read all profiles" ON public.profiles 
   FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 CREATE POLICY "Users can update own profile" ON public.profiles 
   FOR UPDATE USING (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Admin can update any profile" ON public.profiles;
 CREATE POLICY "Admin can update any profile" ON public.profiles 
   FOR UPDATE USING (
     (SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin'
   );
 
 -- Expenses Select, Insert, Update, and Delete Policies
+DROP POLICY IF EXISTS "All authenticated users can view expenses" ON public.expenses;
 CREATE POLICY "All authenticated users can view expenses" ON public.expenses
   FOR SELECT USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can insert expenses" ON public.expenses;
 CREATE POLICY "Authenticated users can insert expenses" ON public.expenses
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update own expenses or Admin update any" ON public.expenses;
 CREATE POLICY "Users can update own expenses or Admin update any" ON public.expenses
   FOR UPDATE USING (
     auth.uid() = user_id OR
     (SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin'
   );
 
+DROP POLICY IF EXISTS "Users can delete own expenses or Admin delete any" ON public.expenses;
 CREATE POLICY "Users can delete own expenses or Admin delete any" ON public.expenses
   FOR DELETE USING (
     auth.uid() = user_id OR
@@ -119,14 +126,17 @@ VALUES ('expense-uploads', 'expense-uploads', true)
 ON CONFLICT (id) DO NOTHING;
 
 -- Storage upload policy
+DROP POLICY IF EXISTS "Authenticated users can upload receipt photos" ON storage.objects;
 CREATE POLICY "Authenticated users can upload receipt photos" ON storage.objects
   FOR INSERT WITH CHECK (bucket_id = 'expense-uploads' AND auth.role() = 'authenticated');
 
 -- Storage public read policy
+DROP POLICY IF EXISTS "Anyone can view receipt photos" ON storage.objects;
 CREATE POLICY "Anyone can view receipt photos" ON storage.objects
   FOR SELECT USING (bucket_id = 'expense-uploads');
 
 -- Storage delete policy
+DROP POLICY IF EXISTS "Admin or owner can delete receipt photos" ON storage.objects;
 CREATE POLICY "Admin or owner can delete receipt photos" ON storage.objects
   FOR DELETE USING (
     bucket_id = 'expense-uploads' AND (
