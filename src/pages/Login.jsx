@@ -54,6 +54,10 @@ export default function Login() {
       const result = await signInWithGoogle();
       if (result?.error) {
         setError(result.error.message || 'Google Login failed. Please ensure the Google provider is enabled in your Supabase dashboard.');
+      } else {
+        // If we are in mock mode, signInWithGoogle resolves without a browser redirect. 
+        // We must manually navigate to the dashboard.
+        navigate('/');
       }
     } catch (err) {
       setError(err.message || 'An unexpected error occurred. Check the console for details.');
