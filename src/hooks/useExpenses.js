@@ -33,8 +33,9 @@ export function useExpenses(filters = {}) {
         if (parsed.date_to)   query = query.lte('expense_date', parsed.date_to);
 
         // Safety wrapper to prevent infinite pending state if network hangs
+        // Increased to 30 seconds to allow for Supabase Free Tier "Cold Starts" (waking up)
         const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Database connection timed out. Please check your network.')), 4000);
+          setTimeout(() => reject(new Error('Database connection timed out. Please check your network.')), 30000);
         });
 
         const result = await Promise.race([query, timeoutPromise]);
@@ -89,7 +90,7 @@ export function useExpenses(filters = {}) {
 
         const insertQuery = supabase.from('expenses').insert([payload]);
         const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Database connection timed out. Your network might be blocking Supabase.')), 5000);
+          setTimeout(() => reject(new Error('Database connection timed out. Your network might be blocking Supabase.')), 30000);
         });
 
         const result = await Promise.race([insertQuery, timeoutPromise]);

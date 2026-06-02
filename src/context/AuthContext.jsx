@@ -13,13 +13,14 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let mounted = true;
 
-    // Safety net: Force loading to stop after 3 seconds no matter what
+    // Safety net: Force loading to stop after 15 seconds no matter what
+    // Increased to 15s because Supabase free tier cold-starts can take a while
     const safetyTimeout = setTimeout(() => {
       if (mounted) {
         console.warn('Auth initialization took too long, forcing load complete.');
         setLoading(false);
       }
-    }, 3000);
+    }, 15000);
 
     async function initializeAuth() {
       try {
