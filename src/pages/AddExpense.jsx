@@ -398,7 +398,7 @@ export default function AddExpense() {
           <button 
             type="submit" 
             disabled={loading}
-            className="glow-btn-white text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+            className="glow-btn py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer w-full mt-4"
           >
             {loading ? (
               <>
