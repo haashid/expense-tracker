@@ -47,6 +47,22 @@ export default function Login() {
     finally { setLoading(false); }
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const result = await signInWithGoogle();
+      if (result?.error) {
+        setError(result.error.message || 'Google Login failed. Please ensure the Google provider is enabled in your Supabase dashboard.');
+      }
+    } catch (err) {
+      setError(err.message || 'An unexpected error occurred. Check the console for details.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       
@@ -83,7 +99,8 @@ export default function Login() {
 
           {/* Google Login */}
           <button 
-            onClick={signInWithGoogle}
+            onClick={handleGoogleLogin}
+            disabled={loading}
             type="button"
             className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-white border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm mb-6 cursor-pointer"
           >
