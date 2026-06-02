@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useExpenses } from '../hooks/useExpenses';
 import { useAuth } from '../context/AuthContext';
 import { CATEGORIES, ENTRY_TYPES } from '../lib/constants';
-import { Calendar, AlignLeft, User, DollarSign, Wallet, FileImage, Clipboard, Sparkles, Upload, X, ArrowLeft } from 'lucide-react';
+import { Calendar, AlignLeft, User, DollarSign, Wallet, FileImage, Clipboard, Sparkles, Upload, X, ArrowLeft, Camera, Images } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function AddExpense() {
@@ -280,21 +280,41 @@ export default function AddExpense() {
                   </p>
                 </div>
               ) : (
-                <div className="relative border-2 border-dashed border-slate-200 hover:border-purple-400 bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-6 transition-all duration-200 text-center flex flex-col items-center justify-center gap-2 cursor-pointer group">
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    required
-                    onChange={e => handleFileChange(e, 'payment')}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  />
-                  <div className="w-12 h-12 bg-white rounded-2xl shadow-inner border border-slate-100 flex items-center justify-center text-slate-450 group-hover:text-purple-650 transition-colors">
-                    <Upload className="w-5 h-5 stroke-[2px]" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-slate-700">Click or drag payment screenshot here</p>
-                    <p className="text-[10px] text-slate-400 mt-1 font-semibold">Supports JPG, JPEG, PNG formats</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Camera Button - Payment */}
+                  <label className="relative flex flex-col items-center justify-center gap-2.5 bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 hover:border-blue-400 text-blue-700 rounded-2xl p-5 cursor-pointer transition-all duration-200 active:scale-95 group">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      onChange={e => handleFileChange(e, 'payment')}
+                      className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                    />
+                    <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-md shadow-blue-600/30 group-hover:scale-105 transition-transform">
+                      <Camera className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs font-extrabold">Take Photo</p>
+                      <p className="text-[10px] font-semibold text-blue-400 mt-0.5">Open camera</p>
+                    </div>
+                  </label>
+
+                  {/* Gallery Button - Payment */}
+                  <label className="relative flex flex-col items-center justify-center gap-2.5 bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 hover:border-slate-400 text-slate-600 rounded-2xl p-5 cursor-pointer transition-all duration-200 active:scale-95 group">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={e => handleFileChange(e, 'payment')}
+                      className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                    />
+                    <div className="w-12 h-12 bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                      <Images className="w-6 h-6 text-slate-500" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs font-extrabold">From Gallery</p>
+                      <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Choose image</p>
+                    </div>
+                  </label>
                 </div>
               )}
             </div>
@@ -320,21 +340,41 @@ export default function AddExpense() {
                   </p>
                 </div>
               ) : (
-                <div className="relative border-2 border-dashed border-slate-200 hover:border-purple-400 bg-slate-50/50 hover:bg-slate-50 rounded-2xl p-6 transition-all duration-200 text-center flex flex-col items-center justify-center gap-2 cursor-pointer group">
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    required
-                    onChange={e => handleFileChange(e, 'bill')}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  />
-                  <div className="w-12 h-12 bg-white rounded-2xl shadow-inner border border-slate-100 flex items-center justify-center text-slate-450 group-hover:text-purple-650 transition-colors">
-                    <Upload className="w-5 h-5 stroke-[2px]" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-slate-700">Click or drag bill/invoice photo here</p>
-                    <p className="text-[10px] text-slate-400 mt-1 font-semibold">Supports JPG, JPEG, PNG formats</p>
-                  </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Camera Button - Bill */}
+                  <label className="relative flex flex-col items-center justify-center gap-2.5 bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-200 hover:border-emerald-400 text-emerald-700 rounded-2xl p-5 cursor-pointer transition-all duration-200 active:scale-95 group">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      onChange={e => handleFileChange(e, 'bill')}
+                      className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                    />
+                    <div className="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-600/30 group-hover:scale-105 transition-transform">
+                      <Camera className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs font-extrabold">Take Photo</p>
+                      <p className="text-[10px] font-semibold text-emerald-500 mt-0.5">Open camera</p>
+                    </div>
+                  </label>
+
+                  {/* Gallery Button - Bill */}
+                  <label className="relative flex flex-col items-center justify-center gap-2.5 bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 hover:border-slate-400 text-slate-600 rounded-2xl p-5 cursor-pointer transition-all duration-200 active:scale-95 group">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={e => handleFileChange(e, 'bill')}
+                      className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                    />
+                    <div className="w-12 h-12 bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                      <Images className="w-6 h-6 text-slate-500" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs font-extrabold">From Gallery</p>
+                      <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Choose image</p>
+                    </div>
+                  </label>
                 </div>
               )}
             </div>
