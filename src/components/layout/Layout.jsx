@@ -92,26 +92,35 @@ export default function Layout() {
               onClick={() => setShowUserMenu(v => !v)}
               className="flex items-center gap-2.5 px-3 py-2 rounded-2xl cursor-pointer transition-all hover:bg-slate-100"
               style={{ border: '1px solid rgba(148, 163, 184, 0.2)' }}>
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-extrabold text-slate-800 uppercase"
-                style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 2px 8px rgba(99,102,241,0.3)' }}>
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-sm font-extrabold text-white uppercase"
+                style={{ background: 'linear-gradient(135deg, #4f46e5, #8b5cf6)', boxShadow: '0 2px 8px rgba(79,70,229,0.3)' }}>
                 {profile?.full_name?.charAt(0) || '?'}
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-xs font-bold text-slate-800 leading-tight">{profile?.full_name || 'User'}</p>
-                <p className="text-[10px] font-semibold leading-tight" style={{ color: profile?.role === 'admin' ? '#6366f1' : '#64748b' }}>
+                <p className="text-xs font-bold text-slate-900 leading-tight">{profile?.full_name || 'User'}</p>
+                <p className="text-[10px] font-semibold leading-tight text-slate-500">
                   {profile?.role === 'admin' ? '👑 Administrator' : 'Family Member'}
                 </p>
               </div>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-500 hidden sm:block" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
             </button>
 
             {showUserMenu && (
-              <div className="absolute right-0 top-full mt-2 w-44 rounded-2xl overflow-hidden z-50 animate-slide-up"
-                style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(226,232,240,0.8)', backdropFilter: 'blur(20px)', boxShadow: '0 12px 32px rgba(15,23,42,0.1)' }}>
-                <button onClick={() => { signOut(); setShowUserMenu(false); }}
-                  className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-semibold text-rose-500 hover:bg-rose-50 transition-colors cursor-pointer">
-                  <LogOut className="w-4 h-4" />
-                  Sign Out
+              <div className="absolute right-0 top-full mt-2 w-48 rounded-2xl overflow-hidden z-50 animate-slide-up bg-white border border-slate-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
+                <div className="px-4 py-3 border-b border-slate-50 sm:hidden">
+                  <p className="text-xs font-bold text-slate-900 truncate">{profile?.full_name || 'User'}</p>
+                  <p className="text-[10px] font-semibold text-slate-500 mt-0.5">{profile?.role === 'admin' ? '👑 Administrator' : 'Family Member'}</p>
+                </div>
+                <button 
+                  onClick={async () => { 
+                    setShowUserMenu(false); 
+                    await signOut(); 
+                    window.location.href = '/login';
+                  }}
+                  className="w-full flex items-center gap-2.5 px-4 py-3.5 text-sm font-bold text-rose-500 hover:bg-rose-50 transition-colors cursor-pointer active:bg-rose-100"
+                >
+                  <LogOut className="w-4 h-4 stroke-[2.5]" />
+                  Sign Out safely
                 </button>
               </div>
             )}
