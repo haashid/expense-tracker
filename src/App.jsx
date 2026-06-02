@@ -12,12 +12,10 @@ function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   
   if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-50 via-rose-50 to-amber-50 gap-3">
-        <div className="w-10 h-10 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
-        <p className="text-xs font-bold text-purple-900 tracking-wide animate-pulse">Establishing secure registry connection...</p>
-      </div>
-    );
+    // Return a completely blank, empty container instead of a loader.
+    // This protects the OAuth hash in the URL and allows session hydration 
+    // without annoying the user with a spinning loading page.
+    return <div className="min-h-screen bg-slate-50"></div>;
   }
   
   if (!user) {
