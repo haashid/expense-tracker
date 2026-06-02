@@ -150,7 +150,7 @@ export default function Dashboard() {
             <div className="glass-card p-6 flex flex-col">
               <div className="mb-4">
                 <h2 className="font-extrabold text-white text-lg">Category Allocation</h2>
-                <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">Visual allocation of wedding funds by category.</p>
+                <p className="text-xs font-medium mt-0.5">Visual allocation of wedding funds by category.</p>
               </div>
               
               <div className="h-64 relative flex-1 flex items-center justify-center">
@@ -185,7 +185,7 @@ export default function Dashboard() {
             <div className="glass-card p-6 flex flex-col">
               <div className="mb-4">
                 <h2 className="font-extrabold text-white text-lg">Spending Breakdown</h2>
-                <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">Horizontal representation of expenditure magnitude.</p>
+                <p className="text-xs font-medium mt-0.5">Horizontal representation of expenditure magnitude.</p>
               </div>
 
               <div className="h-64 relative flex-1">
@@ -217,7 +217,7 @@ export default function Dashboard() {
             <div className="glass-card p-6 flex flex-col lg:col-span-1">
               <div className="mb-6">
                 <h2 className="font-extrabold text-white text-lg">Budget Leaders</h2>
-                <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">Categories with highest consumption.</p>
+                <p className="text-xs font-medium mt-0.5">Categories with highest consumption.</p>
               </div>
 
               <div className="space-y-4 flex-1">
@@ -257,7 +257,7 @@ export default function Dashboard() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="font-extrabold text-white text-lg">Recent Ledger Entries</h2>
-                  <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">The last 5 logged expenses in the registry.</p>
+                  <p className="text-xs font-medium mt-0.5">The last 5 logged expenses in the registry.</p>
                 </div>
                 
                 <Link 
@@ -282,8 +282,8 @@ export default function Dashboard() {
                           <p className="font-extrabold text-white text-sm truncate group-hover:text-blue-600 transition-colors">
                             {expense.description}
                           </p>
-                          <p className="text-[11px] font-semibold mt-0.5' style='color:rgba(255,255,255,0.4)' truncate">
-                            {expense.category} · Paid by <span className="font-bold' style='color:rgba(255,255,255,0.5)'">{expense.paid_by}</span>
+                          <p className="text-[11px] font-semibold mt-0.5 truncate">
+                            {expense.category} · Paid by <span className="font-bold" style={{color:'rgba(255,255,255,0.5)'}}>{expense.paid_by}</span>
                           </p>
                         </div>
                       </div>
@@ -291,7 +291,7 @@ export default function Dashboard() {
                         <p className="font-extrabold text-indigo-300 text-base">
                           ₹{Number(expense.amount).toLocaleString('en-IN')}
                         </p>
-                        <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5' style='color:rgba(255,255,255,0.4)' block">
+                        <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5 block" style={{color:'rgba(255,255,255,0.4)'}}>
                           {new Date(expense.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </span>
                       </div>

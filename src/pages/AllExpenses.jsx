@@ -70,12 +70,12 @@ export default function AllExpenses() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6">
         <div>
           <h1 className="text-2xl font-extrabold text-white">View Transactions</h1>
-          <p className="text-sm mt-1' style='color:rgba(255,255,255,0.4)' >Audit, search, and visually manage every logged expense.</p>
+          <p className="text-sm mt-1" style={{color:'rgba(255,255,255,0.4)'}}>Audit, search, and visually manage every logged expense.</p>
         </div>
         
-        <div className="text-left md:text-right bg-blue-50 border border-blue-100 rounded-2xl px-5 py-3.5 flex flex-col justify-center">
-          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest pl-0.5">Aggregated Ledger Sum</span>
-          <p className="text-2xl font-black ' style='color:#818cf8' >₹{totalAmount.toLocaleString('en-IN')}</p>
+        <div className="text-left md:text-right rounded-2xl px-5 py-3.5 flex flex-col justify-center" style={{background:'rgba(99,102,241,0.12)',border:'1px solid rgba(99,102,241,0.25)'}}>
+          <span className="text-[10px] font-bold uppercase tracking-widest" style={{color:'rgba(167,139,250,0.7)'}}>Aggregated Ledger Sum</span>
+          <p className="text-2xl font-black" style={{color:'#a78bfa'}}>₹{totalAmount.toLocaleString('en-IN')}</p>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ export default function AllExpenses() {
 
         {/* Info & Reset Actions */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs text-slate-400 font-bold">
-          <div className="flex items-center gap-1.5 ' style='background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:9999px;padding:0.25rem 0.75rem;color:rgba(255,255,255,0.5)' >
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold" style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.1)',color:'rgba(255,255,255,0.5)'}}>
             <Filter className="w-3.5 h-3.5" />
             <span>Showing {filteredExpenses.length} of {expenses.length} results</span>
           </div>
@@ -248,7 +248,7 @@ export default function AllExpenses() {
                     </h3>
                     
                     <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <span className="text-[11px] font-semibold ' style='color:rgba(255,255,255,0.4)' >
+                      <span className="text-[11px] font-semibold >
                         Paid by <strong className="text-slate-700">{expense.paid_by}</strong>
                       </span>
                       <span className="text-[10px] text-slate-300">•</span>
