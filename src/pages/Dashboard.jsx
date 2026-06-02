@@ -70,7 +70,6 @@ export default function Dashboard() {
         
         {/* Total spent card */}
         <div className="glass-card glass-card-hover p-5 relative overflow-hidden col-span-2 md:col-span-1">
-          <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Total Spent</span>
             <div className="w-10 h-10 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-700">
@@ -86,7 +85,6 @@ export default function Dashboard() {
 
         {/* Total transactions card */}
         <div className="glass-card p-6 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-          <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Transactions</span>
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-700">
@@ -101,7 +99,6 @@ export default function Dashboard() {
 
         {/* Categories used card */}
         <div className="glass-card p-6 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-          <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-purple-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-purple-600 bg-purple-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Active Segments</span>
             <div className="w-10 h-10 rounded-2xl bg-purple-100 flex items-center justify-center text-purple-700">
@@ -116,7 +113,6 @@ export default function Dashboard() {
 
         {/* Highest Single Expense card */}
         <div className="glass-card p-6 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
-          <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-rose-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-rose-600 bg-rose-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Peak Expense</span>
             <div className="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center text-rose-700">
