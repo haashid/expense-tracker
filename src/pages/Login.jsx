@@ -116,11 +116,8 @@ export default function Login() {
 
           {/* Google Login */}
           <button 
-            onClick={(e) => {
-              e.preventDefault();
-              alert("Google Button Clicked! Check your console if you don't redirect.");
-              handleGoogleLogin();
-            }}
+            onClick={handleGoogleLogin}
+            disabled={loading}
             type="button"
             className="w-full flex items-center justify-center gap-3 py-3.5 px-4 bg-white border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm mb-6 cursor-pointer"
           >
