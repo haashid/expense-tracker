@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { mockService } from '../lib/mockService';
 
@@ -7,19 +7,30 @@ export function useExpenses(filters = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Stable serialised key — prevents infinite re-render when caller
+  // passes an inline object literal on every render.
+  const filtersKey = JSON.stringify(filters);
+  const latestFiltersKey = useRef(filtersKey);
+  latestFiltersKey.current = filtersKey;
+
   async function fetchExpenses() {
     setLoading(true);
     try {
       if (isSupabaseConfigured) {
+        // ── FIXED: removed broken profiles(full_name) join.
+        //    expenses.user_id → auth.users, NOT profiles, so PostgREST
+        //    cannot auto-resolve that join and returns a 400.
+        //    The paid_by column already stores the name we need.
         let query = supabase
           .from('expenses')
-          .select(`*, profiles(full_name)`)
+          .select('*')
           .order('expense_date', { ascending: false });
 
-        if (filters.category) query = query.eq('category', filters.category);
-        if (filters.entry_type) query = query.eq('entry_type', filters.entry_type);
-        if (filters.date_from) query = query.gte('expense_date', filters.date_from);
-        if (filters.date_to) query = query.lte('expense_date', filters.date_to);
+        const parsed = JSON.parse(latestFiltersKey.current);
+        if (parsed.category)  query = query.eq('category', parsed.category);
+        if (parsed.entry_type) query = query.eq('entry_type', parsed.entry_type);
+        if (parsed.date_from) query = query.gte('expense_date', parsed.date_from);
+        if (parsed.date_to)   query = query.lte('expense_date', parsed.date_to);
 
         const { data, error: fetchErr } = await query;
         if (fetchErr) throw fetchErr;
@@ -32,15 +43,19 @@ export function useExpenses(filters = {}) {
       setError(null);
     } catch (err) {
       console.error('Error fetching expenses:', err);
-      setError(err.message || 'An error occurred fetching expenses.');
+      // Do NOT re-throw — just record the error so the UI can show it
+      // without triggering an infinite retry loop.
+      setError(err?.message || 'Failed to load expenses.');
     } finally {
       setLoading(false);
     }
   }
 
+  // Only re-run when the serialised filter string actually changes.
   useEffect(() => {
     fetchExpenses();
-  }, [JSON.stringify(filters)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtersKey]);
 
   async function addExpense(expenseData, paymentFile, billFile) {
     try {
