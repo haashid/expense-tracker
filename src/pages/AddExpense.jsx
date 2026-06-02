@@ -148,13 +148,13 @@ export default function AddExpense() {
                   onClick={() => setEntryType(type.value)}
                   className={`p-4 rounded-2xl border-2 text-left transition-all duration-200 cursor-pointer flex flex-col justify-between h-24 ${
                     isActive
-                      ? 'border-purple-600 bg-purple-50/50 shadow-md shadow-purple-50/20'
+                      ? 'border-blue-600 bg-blue-50 shadow-md shadow-blue-100'
                       : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50/50'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
-                    <p className={`font-bold text-sm ${isActive ? 'text-purple-950' : 'text-slate-800'}`}>{type.label}</p>
-                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center flex-shrink-0 ${isActive ? 'border-purple-650 bg-purple-650' : 'border-slate-300'}`}>
+                    <p className={`font-bold text-sm ${isActive ? 'text-blue-700' : 'text-slate-800'}`}>{type.label}</p>
+                    <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center flex-shrink-0 ${isActive ? 'border-blue-600 bg-blue-600' : 'border-slate-300'}`}>
                       {isActive && <span className="w-1.5 h-1.5 rounded-full bg-white"></span>}
                     </span>
                   </div>
@@ -350,7 +350,7 @@ export default function AddExpense() {
                 placeholder="Any special remarks, vendor phone numbers, or installment details..." 
                 value={form.notes}
                 onChange={e => setForm({...form, notes: e.target.value})}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all font-semibold text-slate-700 text-sm placeholder-slate-350"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-semibold text-slate-700 text-sm placeholder-slate-350"
               />
             </div>
           </div>
@@ -358,7 +358,7 @@ export default function AddExpense() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-purple-755 hover:from-purple-750 hover:to-purple-700 text-white py-3.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-purple-100/50 shadow-md cursor-pointer text-sm"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-bold hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-blue-600/30 shadow-lg cursor-pointer text-sm"
           >
             {loading ? (
               <>

@@ -3,7 +3,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { mockService } from '../lib/mockService';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
-import { Shield, Users, CalendarClock, UserCheck, ShieldAlert, Sparkles, CheckCircle } from 'lucide-react';
+import { Shield, Users, CalendarClock, ShieldAlert, CheckCircle, Crown, UserRound, RefreshCw } from 'lucide-react';
 
 export default function AdminPanel() {
   const { isAdmin, isDemoMode, profile: currentProfile } = useAuth();
@@ -34,41 +34,27 @@ export default function AdminPanel() {
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  useEffect(() => { fetchUsers(); }, []);
 
-  if (!isAdmin) {
-    return <Navigate to="/" replace />;
-  }
+  if (!isAdmin) return <Navigate to="/" replace />;
 
   async function changeRole(userId, newRole) {
     if (userId === currentProfile?.id) {
-      alert('You cannot modify your own administrative role. Have another administrator perform this action if required.');
+      alert('You cannot modify your own administrative role.');
       return;
     }
-
     setActionLoadingId(userId);
     setSuccessMessage('');
     try {
       if (isSupabaseConfigured) {
-        const { error } = await supabase
-          .from('profiles')
-          .update({ role: newRole })
-          .eq('id', userId);
+        const { error } = await supabase.from('profiles').update({ role: newRole }).eq('id', userId);
         if (error) throw error;
       } else {
         await mockService.profiles.updateRole(userId, newRole);
       }
-      
-      // Update local state
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
-      
-      // Show success toast
       const updatedUser = users.find(u => u.id === userId);
-      setSuccessMessage(`Successfully updated ${updatedUser?.full_name || 'user'} role to ${newRole}.`);
-      
-      // Automatically hide toast
+      setSuccessMessage(`✓ ${updatedUser?.full_name || 'User'} is now a ${newRole}.`);
       setTimeout(() => setSuccessMessage(''), 4000);
     } catch (err) {
       alert('Failed to update role: ' + err.message);
@@ -77,181 +63,136 @@ export default function AdminPanel() {
     }
   }
 
+  const admins = users.filter(u => u.role === 'admin');
+  const members = users.filter(u => u.role === 'member');
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      
-      {/* Header card */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-700">
-            <Shield className="w-6 h-6 stroke-[2]" />
+          <div className="w-12 h-12 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shadow-sm">
+            <Shield className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-900">Admin Control Center</h1>
-            <p className="text-xs text-slate-500 font-medium mt-1">Manage family permissions, promote administrators, and audit profiles.</p>
+            <h1 className="text-2xl font-extrabold text-slate-800">Admin Control Center</h1>
+            <p className="text-xs text-slate-400 font-medium mt-0.5">Manage family permissions and registry access.</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 bg-slate-50 border border-slate-150 rounded-2xl px-4 py-2 text-slate-650 text-xs font-bold self-start md:self-auto">
-          <Users className="w-4 h-4 text-slate-400" />
-          <span>Active Users Logged: {users.length}</span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-2xl px-4 py-2.5 text-slate-600 text-xs font-bold">
+            <Users className="w-4 h-4 text-slate-400" />
+            <span>{users.length} Registered</span>
+          </div>
+          <button
+            onClick={fetchUsers}
+            className="w-9 h-9 flex items-center justify-center bg-blue-50 border border-blue-100 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer"
+            title="Refresh list"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
+      {/* Success Toast */}
       {successMessage && (
-        <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-150 p-4 rounded-2xl text-xs font-bold text-emerald-800 animate-slide-in">
-          <CheckCircle className="w-4.5 h-4.5 text-emerald-600 flex-shrink-0" />
+        <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-100 p-4 rounded-2xl text-sm font-bold text-emerald-700">
+          <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
           <span>{successMessage}</span>
         </div>
       )}
 
-      {/* Main Grid */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-        
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <div className="w-8 h-8 border-4 border-purple-200 border-t-purple-650 rounded-full animate-spin"></div>
-            <span className="text-xs font-bold text-slate-400">Querying family database...</span>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-24 gap-3 bg-white rounded-3xl border border-slate-100">
+          <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <span className="text-xs font-bold text-slate-400">Loading family registry...</span>
+        </div>
+      ) : (
+        <div className="space-y-6">
+
+          {/* ── Admins Section ── */}
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/60">
+              <Crown className="w-4 h-4 text-amber-500" />
+              <h2 className="text-sm font-extrabold text-slate-700 uppercase tracking-widest">Administrators ({admins.length})</h2>
+            </div>
+            <div className="divide-y divide-slate-50">
+              {admins.map(u => <UserCard key={u.id} u={u} isSelf={u.id === currentProfile?.id} isAdminUser={true} actionLoadingId={actionLoadingId} changeRole={changeRole} />)}
+              {admins.length === 0 && <p className="text-xs text-slate-400 text-center py-8 font-semibold">No administrators found.</p>}
+            </div>
           </div>
+
+          {/* ── Members Section ── */}
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/60">
+              <Users className="w-4 h-4 text-blue-500" />
+              <h2 className="text-sm font-extrabold text-slate-700 uppercase tracking-widest">Family Members ({members.length})</h2>
+            </div>
+            <div className="divide-y divide-slate-50">
+              {members.map(u => <UserCard key={u.id} u={u} isSelf={u.id === currentProfile?.id} isAdminUser={false} actionLoadingId={actionLoadingId} changeRole={changeRole} />)}
+              {members.length === 0 && <p className="text-xs text-slate-400 text-center py-8 font-semibold">No family members have signed up yet.</p>}
+            </div>
+          </div>
+
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Shared User Card (works on ALL screen sizes) ──
+function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
+  return (
+    <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/50 transition-colors">
+
+      {/* Avatar + Identity */}
+      <div className="flex items-center gap-3 flex-1 min-w-0">
+        <div className={`w-11 h-11 rounded-2xl flex items-center justify-center font-extrabold text-sm uppercase shadow-sm flex-shrink-0 ${isAdminUser ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
+          {u.full_name?.charAt(0) || <UserRound className="w-5 h-5" />}
+        </div>
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <p className="font-extrabold text-slate-800 text-sm">{u.full_name}</p>
+            {isSelf && (
+              <span className="text-[9px] text-blue-600 font-extrabold bg-blue-50 px-1.5 py-0.5 rounded-full border border-blue-100">YOU</span>
+            )}
+          </div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
+            <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full ${isAdminUser ? 'bg-amber-100 text-amber-700' : 'bg-blue-50 text-blue-600'}`}>
+              {isAdminUser ? '👑 Admin' : '👨‍👩‍👧 Member'}
+            </span>
+            <span className="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+              <CalendarClock className="w-3 h-3" />
+              Joined {new Date(u.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Action */}
+      <div className="flex items-center gap-2 self-end sm:self-auto">
+        {isSelf ? (
+          <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1 bg-slate-50 border border-slate-100 px-3 py-2 rounded-xl">
+            <ShieldAlert className="w-3.5 h-3.5" /> Self-lock
+          </span>
         ) : (
           <>
-            {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-50/75 border-b border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    <th className="px-6 py-4 pl-8">Family Member</th>
-                    <th className="px-6 py-4">Security Role</th>
-                    <th className="px-6 py-4">Registry Join Date</th>
-                    <th className="px-6 py-4 text-right pr-8">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {users.map(u => {
-                    const isSelf = u.id === currentProfile?.id;
-                    const isAdminUser = u.role === 'admin';
-                    
-                    return (
-                      <tr key={u.id} className="hover:bg-slate-50/20 transition-all">
-                        {/* User identity */}
-                        <td className="px-6 py-4 pl-8">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-650 border border-slate-200 uppercase shadow-inner">
-                              {u.full_name?.charAt(0) || '👤'}
-                            </div>
-                            <div>
-                              <p className="font-extrabold text-slate-800 text-sm">
-                                {u.full_name} {isSelf && <span className="text-[10px] text-purple-600 font-bold bg-purple-50 px-1.5 py-0.5 rounded border border-purple-100 ml-1">You</span>}
-                              </p>
-                              <span className="text-[10px] text-slate-400 font-semibold">{u.id}</span>
-                            </div>
-                          </div>
-                        </td>
-
-                        {/* Security Role */}
-                        <td className="px-6 py-4">
-                          <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider ${
-                            isAdminUser 
-                              ? 'bg-purple-100 text-purple-800 border border-purple-200' 
-                              : 'bg-blue-50 text-blue-700 border border-blue-100'
-                          }`}>
-                            {isAdminUser ? '👑 admin' : '👨‍👩‍👧 member'}
-                          </span>
-                        </td>
-
-                        {/* Joined Date */}
-                        <td className="px-6 py-4">
-                          <span className="text-xs font-semibold text-slate-450 flex items-center gap-1.5">
-                            <CalendarClock className="w-4 h-4 text-slate-350" />
-                            {new Date(u.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
-                          </span>
-                        </td>
-
-                        {/* Action selector */}
-                        <td className="px-6 py-4 text-right pr-8">
-                          {isSelf ? (
-                            <span className="text-[10px] text-slate-400 font-bold italic flex items-center justify-end gap-1.5">
-                              <ShieldAlert className="w-3.5 h-3.5" /> Self protection lock
-                            </span>
-                          ) : (
-                            <div className="flex items-center justify-end gap-2">
-                              {actionLoadingId === u.id && (
-                                <div className="w-4 h-4 border-2 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
-                              )}
-                              <select 
-                                value={u.role} 
-                                onChange={e => changeRole(u.id, e.target.value)}
-                                disabled={actionLoadingId === u.id}
-                                className="text-xs font-bold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 hover:bg-slate-100 cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all"
-                              >
-                                <option value="member">👨‍👩‍👧 Member</option>
-                                <option value="admin">👑 Admin</option>
-                              </select>
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile List View */}
-            <div className="md:hidden divide-y divide-slate-100">
-              {users.map(u => {
-                const isSelf = u.id === currentProfile?.id;
-                const isAdminUser = u.role === 'admin';
-                return (
-                  <div key={u.id} className="p-5 space-y-4 hover:bg-slate-50/20">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-650 border border-slate-200 uppercase">
-                          {u.full_name?.charAt(0) || '👤'}
-                        </div>
-                        <div>
-                          <p className="font-extrabold text-slate-800 text-sm">
-                            {u.full_name} {isSelf && <span className="text-[9px] text-purple-600 font-bold bg-purple-50 px-1 py-0.5 rounded border border-purple-100 ml-1">You</span>}
-                          </p>
-                          <span className="text-[10px] text-slate-400 font-semibold">{new Date(u.created_at).toLocaleDateString()}</span>
-                        </div>
-                      </div>
-
-                      <span className={`text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
-                        isAdminUser 
-                          ? 'bg-purple-100 text-purple-800' 
-                          : 'bg-blue-50 text-blue-700'
-                      }`}>
-                        {u.role}
-                      </span>
-                    </div>
-
-                    {!isSelf && (
-                      <div className="flex items-center justify-between bg-slate-50 border border-slate-100 p-2.5 rounded-2xl">
-                        <span className="text-xs font-bold text-slate-500">Security Access</span>
-                        <div className="flex items-center gap-2">
-                          {actionLoadingId === u.id && (
-                            <div className="w-3.5 h-3.5 border-2 border-purple-200 border-t-purple-650 rounded-full animate-spin"></div>
-                          )}
-                          <select 
-                            value={u.role} 
-                            onChange={e => changeRole(u.id, e.target.value)}
-                            disabled={actionLoadingId === u.id}
-                            className="text-xs font-bold border border-slate-200 rounded-xl px-2.5 py-1.5 bg-white cursor-pointer"
-                          >
-                            <option value="member">Member</option>
-                            <option value="admin">Admin</option>
-                          </select>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+            {actionLoadingId === u.id && (
+              <div className="w-4 h-4 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin flex-shrink-0"></div>
+            )}
+            <select
+              value={u.role}
+              onChange={e => changeRole(u.id, e.target.value)}
+              disabled={actionLoadingId === u.id}
+              className="text-xs font-bold border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 hover:bg-slate-100 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 min-w-[110px]"
+            >
+              <option value="member">👨‍👩‍👧 Member</option>
+              <option value="admin">👑 Admin</option>
+            </select>
           </>
         )}
-
       </div>
 
     </div>

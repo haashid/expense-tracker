@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useExpenses } from '../hooks/useExpenses';
 import { useAuth } from '../context/AuthContext';
 import { CATEGORIES, ENTRY_TYPES } from '../lib/constants';
-import { Search, Filter, Calendar, Trash2, Eye, FileText, Camera, Tag, CalendarClock, RefreshCw } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Search, Filter, Calendar, Trash2, Eye, FileText, Camera, Tag, CalendarClock, RefreshCw, TrendingUp } from 'lucide-react';
 
 export default function AllExpenses() {
   const [filters, setFilters] = useState({
@@ -41,6 +42,14 @@ export default function AllExpenses() {
     setSearchQuery('');
   };
 
+  const dailyData = [...filteredExpenses].reduce((acc, exp) => {
+    const date = new Date(exp.expense_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    if (!acc[date]) acc[date] = { date, amount: 0 };
+    acc[date].amount += Number(exp.amount);
+    return acc;
+  }, {});
+  const chartData = Object.values(dailyData);
+
   const handleDelete = async (id) => {
     if (!window.confirm('Are you absolutely sure you want to delete this expense record? This action is permanent.')) return;
     
@@ -58,20 +67,50 @@ export default function AllExpenses() {
     <div className="space-y-6 max-w-7xl mx-auto">
       
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900">All Wedding Expenses</h1>
-          <p className="text-sm text-slate-500 font-medium mt-1">Audit, search, and manage every logged expense in detail.</p>
+          <h1 className="text-2xl font-extrabold text-slate-800">View Transactions</h1>
+          <p className="text-sm text-slate-400 font-medium mt-1">Audit, search, and visually manage every logged expense.</p>
         </div>
         
-        <div className="text-left md:text-right bg-purple-50/70 border border-purple-100 rounded-2xl px-5 py-3.5 flex flex-col justify-center">
-          <span className="text-[10px] font-bold text-purple-600 uppercase tracking-widest pl-0.5">Aggregated Ledger Sum</span>
-          <p className="text-2xl font-black text-purple-750 mt-0.5">₹{totalAmount.toLocaleString('en-IN')}</p>
+        <div className="text-left md:text-right bg-blue-50 border border-blue-100 rounded-2xl px-5 py-3.5 flex flex-col justify-center">
+          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest pl-0.5">Aggregated Ledger Sum</span>
+          <p className="text-2xl font-black text-blue-700 mt-0.5">₹{totalAmount.toLocaleString('en-IN')}</p>
         </div>
       </div>
 
+      {/* Cash Flow Graph */}
+      {filteredExpenses.length > 0 && !loading && (
+        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="flex items-center gap-2 mb-6">
+            <TrendingUp className="w-5 h-5 text-blue-500" />
+            <h2 className="text-lg font-extrabold text-slate-800">Cash Flow Trend</h2>
+          </div>
+          <div className="h-48 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }} axisLine={false} tickLine={false} />
+                <YAxis tickFormatter={(v) => `₹${(v/1000).toFixed(0)}k`} tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }} axisLine={false} tickLine={false} />
+                <Tooltip 
+                  formatter={(v) => `₹${Number(v).toLocaleString('en-IN')}`}
+                  contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
+                />
+                <Area type="monotone" dataKey="amount" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorAmount)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
+
       {/* Advanced Filters Card */}
-      <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+      <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
         
         <div className="flex flex-col lg:flex-row gap-3">
           {/* Text Search */}
@@ -82,7 +121,7 @@ export default function AllExpenses() {
               placeholder="Search description, shopper name, notes..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50/75 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-inner text-sm"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner text-sm"
             />
           </div>
 
@@ -92,7 +131,7 @@ export default function AllExpenses() {
               <select 
                 value={filters.category} 
                 onChange={e => setFilters({...filters, category: e.target.value})}
-                className="w-full pl-3 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all text-sm appearance-none font-semibold text-slate-700"
+                className="w-full pl-3 pr-8 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm appearance-none font-semibold text-slate-700"
               >
                 <option value="">All Categories</option>
                 {CATEGORIES.map(c => <option key={c.label} value={c.label}>{c.icon} {c.label}</option>)}
@@ -105,7 +144,7 @@ export default function AllExpenses() {
               <select 
                 value={filters.entry_type} 
                 onChange={e => setFilters({...filters, entry_type: e.target.value})}
-                className="w-full pl-3 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all text-sm appearance-none font-semibold text-slate-700"
+                className="w-full pl-3 pr-8 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm appearance-none font-semibold text-slate-700"
               >
                 <option value="">All Entry Types</option>
                 {ENTRY_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
@@ -119,7 +158,7 @@ export default function AllExpenses() {
                 type="date" 
                 value={filters.date_from}
                 onChange={e => setFilters({...filters, date_from: e.target.value})}
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all text-xs font-semibold text-slate-600"
+                className="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-xs font-semibold text-slate-600"
               />
             </div>
 
@@ -129,7 +168,7 @@ export default function AllExpenses() {
                 type="date" 
                 value={filters.date_to}
                 onChange={e => setFilters({...filters, date_to: e.target.value})}
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all text-xs font-semibold text-slate-600"
+                className="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-xs font-semibold text-slate-600"
               />
             </div>
           </div>
@@ -145,7 +184,7 @@ export default function AllExpenses() {
           <div className="flex gap-2">
             <button 
               onClick={() => refetch()}
-              className="flex items-center gap-1 hover:text-purple-650 transition-colors border border-slate-100 hover:border-purple-200 hover:bg-purple-50/40 px-3 py-1.5 rounded-full cursor-pointer bg-white shadow-sm"
+              className="flex items-center gap-1 hover:text-blue-600 transition-colors border border-slate-100 hover:border-blue-200 hover:bg-blue-50 px-3 py-1.5 rounded-full cursor-pointer bg-white shadow-sm"
             >
               <RefreshCw className="w-3 h-3" />
               <span>Refresh Registry</span>
@@ -154,7 +193,7 @@ export default function AllExpenses() {
             {(filters.category || filters.entry_type || filters.date_from || filters.date_to || searchQuery) && (
               <button 
                 onClick={handleResetFilters}
-                className="text-purple-600 hover:text-purple-800 transition-colors hover:underline cursor-pointer bg-purple-50 border border-purple-100 px-3 py-1.5 rounded-full"
+                className="text-blue-600 hover:text-blue-800 transition-colors hover:underline cursor-pointer bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-full"
               >
                 Reset Active Filters
               </button>
@@ -166,11 +205,11 @@ export default function AllExpenses() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-          <div className="w-10 h-10 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
           <span className="text-sm font-semibold text-slate-500 animate-pulse">Syncing transactions...</span>
         </div>
       ) : filteredExpenses.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-100 p-16 text-center shadow-sm">
+        <div className="bg-white rounded-3xl border border-slate-100 p-16 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <span className="text-4xl inline-block mb-3">🔍</span>
           <h3 className="text-lg font-bold text-slate-800">No matching expenses found</h3>
           <p className="text-slate-500 max-w-sm mx-auto text-sm mt-1">
@@ -178,14 +217,14 @@ export default function AllExpenses() {
           </p>
           <button 
             onClick={handleResetFilters}
-            className="mt-4 text-xs font-bold text-white bg-purple-600 hover:bg-purple-750 px-4 py-2 rounded-xl transition-all shadow-sm shadow-purple-100 cursor-pointer"
+            className="mt-4 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-full transition-all shadow-md shadow-blue-600/30 cursor-pointer"
           >
             Clear Filters
           </button>
         </div>
       ) : (
         /* Expenses Ledger Grid */
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {filteredExpenses.map(expense => {
             const cat = CATEGORIES.find(c => c.label === expense.category);
             const isOwner = expense.user_id === user?.id;
@@ -194,93 +233,87 @@ export default function AllExpenses() {
             return (
               <div 
                 key={expense.id} 
-                className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between gap-4 group relative"
+                className="bg-white rounded-3xl border border-slate-100 p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
               >
                 
-                {/* Category Badge & Date */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider ${cat?.color || 'bg-slate-100 text-slate-800'}`}>
-                      {cat?.icon} {expense.category}
-                    </span>
-                    <span className="text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-1 rounded-full flex items-center gap-1">
-                      <Tag className="w-2.5 h-2.5" />
+                {/* Mobile top: Details & Icon */}
+                <div className="flex items-start md:items-center gap-4 flex-1">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 transition-all duration-300 shadow-sm ${cat?.color || 'bg-slate-50 text-slate-600'}`}>
+                    {cat?.icon || '📦'}
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base md:text-lg font-extrabold text-slate-800 group-hover:text-blue-600 transition-colors truncate">
+                      {expense.description}
+                    </h3>
+                    
+                    <div className="flex flex-wrap items-center gap-2 mt-1">
+                      <span className="text-[11px] font-semibold text-slate-500">
+                        Paid by <strong className="text-slate-700">{expense.paid_by}</strong>
+                      </span>
+                      <span className="text-[10px] text-slate-300">•</span>
+                      <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1">
+                        <CalendarClock className="w-3.5 h-3.5" />
+                        {new Date(expense.expense_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                    </div>
+
+                    {expense.notes && (
+                      <p className="text-[11px] text-slate-400 italic mt-1.5 line-clamp-1 border-l-2 border-slate-200 pl-2">
+                        “{expense.notes}”
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right/Bottom Side: Amount and Actions */}
+                <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center border-t md:border-t-0 border-slate-100 pt-3 md:pt-0 shrink-0 gap-3">
+                  
+                  <div className="text-left md:text-right">
+                    <p className="text-xl md:text-2xl font-black text-blue-600 leading-none">
+                      ₹{Number(expense.amount).toLocaleString('en-IN')}
+                    </p>
+                    <span className="text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.5 rounded-full inline-block mt-2">
                       {expense.entry_type?.replace('_', ' ')}
                     </span>
                   </div>
 
-                  <span className="text-xs font-bold text-slate-400 flex items-center gap-1">
-                    <CalendarClock className="w-3.5 h-3.5" />
-                    {expense.expense_date}
-                  </span>
-                </div>
-
-                {/* Amount & Description */}
-                <div>
-                  <h3 className="text-base font-bold text-slate-850 group-hover:text-purple-950 transition-colors">
-                    {expense.description}
-                  </h3>
-                  {expense.notes && (
-                    <p className="text-xs text-slate-450 italic bg-slate-50 border border-slate-100/50 p-2.5 rounded-xl mt-2 line-clamp-2">
-                      “{expense.notes}”
-                    </p>
-                  )}
-                </div>
-
-                {/* Metadata & Actions split */}
-                <div className="flex items-end justify-between border-t border-slate-100 pt-3.5 mt-1">
-                  
-                  {/* Creator / Shopper Information */}
-                  <div className="text-left">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Paid By</span>
-                    <span className="text-xs font-bold text-slate-700">{expense.paid_by}</span>
-                    <span className="text-[10px] text-slate-400 block mt-0.5">
-                      Logged by {expense.profiles?.full_name || 'Family member'} on {new Date(expense.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  </div>
-
-                  {/* Pricing and view/delete options */}
-                  <div className="text-right flex flex-col items-end gap-1.5">
-                    <p className="text-xl font-black text-purple-750 leading-none">₹{Number(expense.amount).toLocaleString('en-IN')}</p>
+                  <div className="flex items-center justify-end gap-2">
+                    {/* Attached screenshots buttons */}
+                    {expense.payment_screenshot_url && (
+                      <button 
+                        onClick={() => setImageModal({ url: expense.payment_screenshot_url, type: 'Payment Screenshot' })}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-blue-600 bg-blue-50 border border-blue-100 hover:bg-blue-600 hover:text-white transition-colors shadow-sm cursor-pointer"
+                        title="View Payment Receipt"
+                      >
+                        <Camera className="w-4 h-4" />
+                      </button>
+                    )}
                     
-                    <div className="flex items-center gap-1.5">
-                      {/* Attached screenshots buttons */}
-                      {expense.payment_screenshot_url && (
-                        <button 
-                          onClick={() => setImageModal({ url: expense.payment_screenshot_url, type: 'Payment Screenshot' })}
-                          className="flex items-center gap-1 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-1 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer"
-                        >
-                          <Camera className="w-3 h-3" />
-                          <span>Payment receipt</span>
-                        </button>
-                      )}
-                      
-                      {expense.bill_screenshot_url && (
-                        <button 
-                          onClick={() => setImageModal({ url: expense.bill_screenshot_url, type: 'Invoice Bill Photo' })}
-                          className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-lg hover:bg-emerald-100 transition-colors cursor-pointer"
-                        >
-                          <FileText className="w-3 h-3" />
-                          <span>Invoice Bill</span>
-                        </button>
-                      )}
+                    {expense.bill_screenshot_url && (
+                      <button 
+                        onClick={() => setImageModal({ url: expense.bill_screenshot_url, type: 'Invoice Bill Photo' })}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-emerald-600 bg-emerald-50 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-colors shadow-sm cursor-pointer"
+                        title="View Invoice"
+                      >
+                        <FileText className="w-4 h-4" />
+                      </button>
+                    )}
 
-                      {/* Delete expense */}
-                      {canDelete && (
-                        <button 
-                          onClick={() => handleDelete(expense.id)}
-                          disabled={deletingId === expense.id}
-                          className="w-7 h-7 bg-red-50 hover:bg-red-100 text-red-500 border border-red-100 rounded-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95 disabled:opacity-50 cursor-pointer"
-                          title="Delete this record"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
+                    {/* Delete expense */}
+                    {canDelete && (
+                      <button 
+                        onClick={() => handleDelete(expense.id)}
+                        disabled={deletingId === expense.id}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-red-500 bg-red-50 border border-red-100 hover:bg-red-500 hover:text-white transition-colors shadow-sm cursor-pointer disabled:opacity-50"
+                        title="Delete this record"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
 
                 </div>
-
               </div>
             );
           })}

@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Receipt, PlusCircle, Settings, LogOut, User, Sparkles } from 'lucide-react';
+import { LayoutDashboard, Receipt, PlusCircle, Settings, LogOut, User, Sparkles, Gem } from 'lucide-react';
 import { mockService } from '../../lib/mockService';
 
 const navItems = [
@@ -39,11 +39,13 @@ export default function Layout() {
       )}
 
       {/* Top Navbar - Desktop Only */}
-      <nav className="bg-white/95 backdrop-blur border-b border-slate-100 px-6 py-3.5 flex items-center justify-between sticky top-0 z-45 shadow-sm">
+      <nav className="bg-white/95 backdrop-blur border-b border-slate-100 px-6 py-4 flex items-center justify-between sticky top-0 z-45 shadow-sm">
         <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className="text-2xl group-hover:rotate-12 transition-transform duration-300">💍</span>
-            <span className="font-extrabold bg-gradient-to-r from-purple-900 to-rose-600 bg-clip-text text-transparent tracking-tight text-lg">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-blue-100">
+              <Gem className="w-5 h-5 fill-blue-200" />
+            </div>
+            <span className="font-extrabold text-slate-800 tracking-tight text-lg">
               Hasheema's Wedding
             </span>
           </Link>
@@ -59,11 +61,11 @@ export default function Layout() {
                   to={item.to}
                   className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? 'bg-purple-555 bg-gradient-to-tr from-purple-600 to-purple-500 text-white shadow-md shadow-purple-100'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
+                      : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-550'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -75,8 +77,8 @@ export default function Layout() {
                 to="/admin" 
                 className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
                   location.pathname === '/admin'
-                    ? 'bg-purple-600 bg-gradient-to-tr from-purple-600 to-purple-500 text-white shadow-md shadow-purple-100'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 <Settings className="w-4 h-4" />
@@ -89,20 +91,20 @@ export default function Layout() {
         {/* User profile dropdown & signout */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-100 to-rose-100 border border-purple-200 flex items-center justify-center text-purple-750 font-bold text-sm shadow-inner">
+            <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm shadow-sm">
               {profile?.full_name?.charAt(0) || <User className="w-4 h-4" />}
             </div>
             <div className="hidden md:flex flex-col text-left">
               <span className="text-sm font-bold text-slate-800 leading-none">{profile?.full_name}</span>
-              <span className="text-[10px] font-bold text-purple-600 uppercase tracking-wider mt-0.5">
-                {profile?.role === 'admin' ? '👑 Admin' : '👨‍👩‍👧 Family Member'}
+              <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider mt-0.5">
+                {profile?.role === 'admin' ? '👑 Admin' : 'Family Member'}
               </span>
             </div>
           </div>
 
           <button 
             onClick={signOut}
-            className="hidden md:flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-red-600 transition-colors border border-slate-200 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-red-50 hover:border-red-100 cursor-pointer"
+            className="hidden md:flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-red-600 transition-colors border border-slate-200 px-3 py-1.5 rounded-xl bg-white hover:bg-red-50 hover:border-red-100 cursor-pointer shadow-sm"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign out</span>
@@ -116,46 +118,30 @@ export default function Layout() {
       </main>
 
       {/* Bottom Navigation Bar - Mobile Only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-3 py-2 flex justify-around items-center z-45 shadow-lg shadow-black/10 backdrop-blur-md bg-white/95">
-        {navItems.map(item => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.to;
-          return (
-            <Link 
-              key={item.to} 
-              to={item.to}
-              className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all duration-200 ${
-                isActive 
-                  ? 'text-purple-650 scale-105' 
-                  : 'text-slate-400 hover:text-slate-650'
-              }`}
-            >
-              <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5px]' : 'stroke-[2px]'}`} />
-              <span className="text-[10px] font-bold tracking-tight">{item.label}</span>
-            </Link>
-          );
-        })}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white px-6 py-2 pb-6 flex justify-between items-center z-45 shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.08)] rounded-t-3xl">
+        <Link to="/" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
+          <LayoutDashboard className={`w-6 h-6 ${location.pathname === '/' ? 'fill-blue-50' : ''}`} />
+        </Link>
         
-        {isAdmin && (
-          <Link 
-            to="/admin" 
-            className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all duration-200 ${
-              location.pathname === '/admin' 
-                ? 'text-purple-650 scale-105' 
-                : 'text-slate-400 hover:text-slate-650'
-            }`}
-          >
-            <Settings className={`w-5 h-5 ${location.pathname === '/admin' ? 'stroke-[2.5px]' : 'stroke-[2px]'}`} />
-            <span className="text-[10px] font-bold tracking-tight">Admin</span>
+        <Link to="/expenses" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/expenses' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
+          <Receipt className={`w-6 h-6 ${location.pathname === '/expenses' ? 'fill-blue-50' : ''}`} />
+        </Link>
+
+        {/* Prominent Floating Action Button */}
+        <Link to="/add" className="relative -top-6 bg-blue-600 text-white p-4 rounded-full shadow-xl shadow-blue-600/30 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center border-4 border-white">
+          <PlusCircle className="w-7 h-7" />
+        </Link>
+
+        {isAdmin ? (
+          <Link to="/admin" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/admin' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
+            <Settings className={`w-6 h-6 ${location.pathname === '/admin' ? 'fill-blue-50' : ''}`} />
           </Link>
+        ) : (
+           <div className="w-10"></div> /* Spacer if not admin */
         )}
 
-        <button 
-          onClick={signOut}
-          className="flex flex-col items-center gap-1 px-3 py-1.5 text-slate-400 hover:text-red-500 cursor-pointer"
-        >
-          <LogOut className="w-5 h-5 stroke-[2px]" />
-          <span className="text-[10px] font-bold tracking-tight">Exit</span>
+        <button onClick={signOut} className="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-red-500 transition-colors">
+          <LogOut className="w-6 h-6" />
         </button>
       </nav>
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Heart, Lock, Mail, Sparkles, AlertCircle, ShieldAlert } from 'lucide-react';
+import { Heart, Lock, Mail, Sparkles, AlertCircle, ShieldAlert, Key } from 'lucide-react';
 
 export default function AdminLogin() {
   const { signIn, isDemoMode } = useAuth();
@@ -58,29 +58,29 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-br from-purple-100 via-slate-50 to-indigo-100 p-4 md:p-6">
+    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-[#f4f7fe] p-4 md:p-6">
       
       {/* Decorative Floating Circles */}
-      <div className="absolute top-12 left-12 w-64 h-64 rounded-full bg-purple-300/30 blur-3xl -z-10 animate-pulse"></div>
-      <div className="absolute bottom-12 right-12 w-72 h-72 rounded-full bg-amber-200/30 blur-3xl -z-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-12 left-12 w-64 h-64 rounded-full bg-blue-300/20 blur-3xl -z-10 animate-pulse"></div>
+      <div className="absolute bottom-12 right-12 w-72 h-72 rounded-full bg-indigo-300/20 blur-3xl -z-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl border border-purple-200/40 shadow-2xl rounded-3xl p-8 relative">
+      <div className="w-full max-w-md bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-3xl p-8 relative">
         
         {/* Mode indicator badge */}
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="flex items-center gap-1 bg-purple-950 text-amber-400 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg border border-purple-800">
+          <span className="flex items-center gap-1 bg-slate-900 text-amber-400 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg border border-slate-800">
             <ShieldAlert className="w-3.5 h-3.5" /> Secure Admin Portal
           </span>
         </div>
 
         <div className="text-center mt-4 mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-purple-900 to-indigo-950 text-white text-3xl shadow-xl mb-4 transform hover:rotate-12 transition-transform duration-300">
-            🔑
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 border border-slate-200 text-slate-800 shadow-lg shadow-slate-900/5 mb-4 transform hover:rotate-12 transition-transform duration-300">
+            <Key className="w-8 h-8 fill-slate-200" />
           </div>
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-950 to-indigo-900">
+          <h1 className="text-3xl font-extrabold text-slate-800">
             Admin Registry Access
           </h1>
-          <p className="text-sm font-semibold text-purple-750 tracking-wide mt-1 uppercase">
+          <p className="text-sm font-semibold text-slate-500 tracking-wide mt-1 uppercase">
             Hasheema's Wedding Ledger
           </p>
         </div>
@@ -90,14 +90,14 @@ export default function AdminLogin() {
           <div className="relative">
             <label className="text-xs font-semibold text-slate-700 mb-1 block pl-1">Admin Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-650" />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-500" />
               <input 
                 type="email" 
                 required 
                 placeholder="haashidgo@gmail.com" 
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white/70 border border-purple-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
               />
             </div>
           </div>
@@ -105,14 +105,14 @@ export default function AdminLogin() {
           <div className="relative">
             <label className="text-xs font-semibold text-slate-700 mb-1 block pl-1">Security Password</label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-650" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-500" />
               <input 
                 type="password" 
                 required 
                 placeholder="••••••••" 
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white/70 border border-purple-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
               />
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function AdminLogin() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-800 to-indigo-900 hover:from-purple-900 hover:to-indigo-950 text-white py-3.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-purple-900/20 shadow-md"
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3.5 rounded-xl font-bold hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-slate-900/20 shadow-lg"
           >
             {loading ? (
               <>
@@ -148,18 +148,18 @@ export default function AdminLogin() {
 
         {/* Admin Demo Login Box */}
         {isDemoMode && (
-          <div className="mt-8 pt-6 border-t border-purple-100">
+          <div className="mt-8 pt-6 border-t border-slate-100">
             <div className="flex items-center gap-1.5 justify-center mb-3">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <p className="text-xs font-bold text-purple-900/60 uppercase tracking-wider">Quick Admin Shortcut</p>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Quick Admin Shortcut</p>
             </div>
             <button 
               onClick={handleQuickLogin}
               disabled={loading}
-              className="w-full flex flex-col items-center p-3 bg-purple-50/70 hover:bg-purple-100 border border-purple-100 rounded-xl transition-all group"
+              className="w-full flex flex-col items-center p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl transition-all group shadow-sm"
             >
-              <span className="text-xs font-bold text-purple-950 group-hover:text-purple-800">👑 Sign In as Haashid (Admin)</span>
-              <span className="text-[10px] text-purple-600 font-semibold mt-0.5">Full Read/Write Ledger Access</span>
+              <span className="text-xs font-bold text-slate-800 group-hover:text-slate-900">👑 Sign In as Haashid (Admin)</span>
+              <span className="text-[10px] text-slate-500 font-semibold mt-0.5">Full Read/Write Ledger Access</span>
             </button>
           </div>
         )}
@@ -167,7 +167,7 @@ export default function AdminLogin() {
         <div className="text-center mt-6">
           <Link
             to="/login"
-            className="text-xs font-bold text-indigo-650 hover:text-indigo-850 transition-colors hover:underline"
+            className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors hover:underline"
           >
             ← Return to standard Family Portal login
           </Link>

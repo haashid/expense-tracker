@@ -92,13 +92,13 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-br from-violet-50 via-rose-50 to-amber-50 p-4 md:p-6">
+    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-[#f4f7fe] p-4 md:p-6">
       
       {/* Decorative Floating Circles */}
-      <div className="absolute top-12 left-12 w-64 h-64 rounded-full bg-purple-200/40 blur-3xl -z-10 animate-pulse"></div>
-      <div className="absolute bottom-12 right-12 w-72 h-72 rounded-full bg-rose-200/40 blur-3xl -z-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-12 left-12 w-64 h-64 rounded-full bg-blue-200/40 blur-3xl -z-10 animate-pulse"></div>
+      <div className="absolute bottom-12 right-12 w-72 h-72 rounded-full bg-emerald-200/40 blur-3xl -z-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl p-8 relative">
+      <div className="w-full max-w-md bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-3xl p-8 relative">
         
         {/* Mode indicator badge */}
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -114,13 +114,13 @@ export default function Login() {
         </div>
 
         <div className="text-center mt-4 mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-purple-600 to-rose-500 text-white text-3xl shadow-xl mb-4 transform hover:rotate-12 transition-transform duration-300">
-            💍
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 border border-blue-100 text-blue-600 shadow-lg shadow-blue-600/10 mb-4 transform hover:rotate-12 transition-transform duration-300">
+            <Sparkles className="w-8 h-8 fill-blue-200" />
           </div>
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-950 via-purple-800 to-rose-700">
+          <h1 className="text-3xl font-extrabold text-slate-800">
             Hasheema's Wedding
           </h1>
-          <p className="text-sm font-semibold text-gray-500 tracking-wide mt-1 uppercase">
+          <p className="text-sm font-semibold text-slate-400 tracking-wide mt-1 uppercase">
             Expense Tracker & Registry
           </p>
         </div>
@@ -176,7 +176,7 @@ export default function Login() {
                   placeholder="Haashid Ali" 
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 bg-white/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm"
+                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
                 />
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function Login() {
                 placeholder="family@wedding.com" 
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
               />
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function Login() {
                 placeholder="••••••••" 
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-white/70 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
               />
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function Login() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 via-purple-700 to-rose-600 hover:from-purple-750 hover:to-rose-650 text-white py-3.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-purple-200/50 shadow-md"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-bold hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-blue-600/30 shadow-lg"
           >
             {loading ? (
               <>
@@ -248,7 +248,7 @@ export default function Login() {
               setIsSignUp(!isSignUp);
               setError('');
             }}
-            className="text-xs font-bold text-purple-700 hover:text-purple-900 transition-colors hover:underline cursor-pointer"
+            className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors hover:underline cursor-pointer"
           >
             {isSignUp 
               ? 'Already registered? Sign In instead' 
@@ -266,10 +266,10 @@ export default function Login() {
             <button 
               onClick={() => handleQuickLogin('family@wedding.com', 'member')}
               disabled={loading}
-              className="w-full flex flex-col items-center p-3 bg-rose-50/70 hover:bg-rose-100 border border-rose-100 rounded-xl transition-all group"
+              className="w-full flex flex-col items-center p-3 bg-blue-50/70 hover:bg-blue-100 border border-blue-100 rounded-xl transition-all group shadow-sm"
             >
-              <span className="text-xs font-bold text-rose-950 group-hover:text-rose-800">👨‍👩‍👧 Family Member</span>
-              <span className="text-[10px] text-rose-600 font-semibold mt-0.5">Standard Registry Access</span>
+              <span className="text-xs font-bold text-blue-950 group-hover:text-blue-800">👨‍👩‍👧 Family Member</span>
+              <span className="text-[10px] text-blue-600 font-semibold mt-0.5">Standard Registry Access</span>
             </button>
           </div>
         )}
@@ -278,7 +278,7 @@ export default function Login() {
           <span className="flex items-center gap-1 justify-center">
             <Lock className="w-3 h-3" /> Access restricted to invited family members.
           </span>
-          <Link to="/login/admin" className="text-[10px] text-purple-750 font-bold hover:underline transition-all">
+          <Link to="/login/admin" className="text-[10px] text-blue-600 font-bold hover:underline transition-all">
             🔒 Secure Administrator Portal
           </Link>
         </p>
