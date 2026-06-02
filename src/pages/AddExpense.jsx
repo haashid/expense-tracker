@@ -132,7 +132,7 @@ export default function AddExpense() {
             <span>Add Wedding Expense</span>
             <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
           </h1>
-          <p className="text-sm font-medium mt-1 >Select an entry method and input the transaction details below.</p>
+          <p className="text-sm font-medium mt-1">Select an entry method and input the transaction details below.</p>
         </div>
 
         {/* Entry Type Selector Tabs */}
@@ -186,7 +186,7 @@ export default function AddExpense() {
                 >
                   {CATEGORIES.map(c => <option key={c.label} value={c.label}>{c.icon} {c.label}</option>)}
                 </select>
-                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-white/40 text-xs >▼</div>
+                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-white/40 text-xs">▼</div>
               </div>
             </div>
 

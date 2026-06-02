@@ -248,7 +248,7 @@ export default function AllExpenses() {
                     </h3>
                     
                     <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <span className="text-[11px] font-semibold >
+                      <span className="text-[11px] font-semibold">
                         Paid by <strong className="text-slate-700">{expense.paid_by}</strong>
                       </span>
                       <span className="text-[10px] text-slate-300">•</span>
