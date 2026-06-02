@@ -51,16 +51,26 @@ export default function Login() {
     setLoading(true);
     setError('');
     try {
+      console.log('Initiating Google Login...');
       const result = await signInWithGoogle();
+      console.log('Google Login Result:', result);
+      
       if (result?.error) {
         setError(result.error.message || 'Google Login failed. Please ensure the Google provider is enabled in your Supabase dashboard.');
         setLoading(false);
       } else {
-        // If we are in mock mode, it returns the session immediately. We must manually navigate.
-        // If we are using real Supabase, it returns { data: { provider, url } } and automatically redirects the browser.
-        // We MUST NOT call navigate('/') if we are using real Supabase, as it will cancel the browser redirect!
+        // If mock mode
         if (result?.data?.user) {
+          console.log('Mock mode detected, navigating to /');
           navigate('/');
+        } 
+        // If real Supabase and it returned a URL but didn't redirect automatically
+        else if (result?.data?.url) {
+          console.log('Real Supabase detected, forcing browser redirect to:', result.data.url);
+          window.location.href = result.data.url;
+        } else {
+          console.warn('Google Login returned no error, no user, and no URL?', result);
+          setLoading(false);
         }
       }
     } catch (err) {
