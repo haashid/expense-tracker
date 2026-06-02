@@ -32,9 +32,14 @@ export function useExpenses(filters = {}) {
         if (parsed.date_from) query = query.gte('expense_date', parsed.date_from);
         if (parsed.date_to)   query = query.lte('expense_date', parsed.date_to);
 
-        const { data, error: fetchErr } = await query;
-        if (fetchErr) throw fetchErr;
-        setExpenses(data || []);
+        // Safety wrapper to prevent infinite pending state if network hangs
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Database connection timed out. Please check your network.')), 4000);
+        });
+
+        const result = await Promise.race([query, timeoutPromise]);
+        if (result.error) throw result.error;
+        setExpenses(result.data || []);
       } else {
         const { data, error: mockErr } = await mockService.expenses.getAll(filters);
         if (mockErr) throw mockErr;
