@@ -70,7 +70,7 @@ export default function AllExpenses() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6">
         <div>
           <h1 className="text-2xl font-extrabold text-slate-800">View Transactions</h1>
-          <p className="text-sm mt-1" style={{color:'rgba(255,255,255,0.4)'}}>Audit, search, and visually manage every logged expense.</p>
+          <p className="text-sm mt-1" style={{color:'#64748b'}}>Audit, search, and visually manage every logged expense.</p>
         </div>
         
         <div className="text-left md:text-right rounded-2xl px-5 py-3.5 flex flex-col justify-center" style={{background:'rgba(99,102,241,0.12)',border:'1px solid rgba(99,102,241,0.25)'}}>
@@ -115,7 +115,7 @@ export default function AllExpenses() {
         <div className="flex flex-col lg:flex-row gap-3">
           {/* Text Search */}
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-500" />
             <input 
               type="text" 
               placeholder="Search description, shopper name, notes..."
@@ -136,7 +136,7 @@ export default function AllExpenses() {
                 <option value="">All Categories</option>
                 {CATEGORIES.map(c => <option key={c.label} value={c.label}>{c.icon} {c.label}</option>)}
               </select>
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">▼</div>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500 text-xs">▼</div>
             </div>
 
             {/* Entry Type Filter */}
@@ -149,7 +149,7 @@ export default function AllExpenses() {
                 <option value="">All Entry Types</option>
                 {ENTRY_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">▼</div>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500 text-xs">▼</div>
             </div>
 
             {/* Start Date */}
@@ -175,8 +175,8 @@ export default function AllExpenses() {
         </div>
 
         {/* Info & Reset Actions */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs text-slate-400 font-bold">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold" style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.1)',color:'rgba(255,255,255,0.5)'}}>
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs text-slate-500 font-bold">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold" style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.1)',color:'#475569'}}>
             <Filter className="w-3.5 h-3.5" />
             <span>Showing {filteredExpenses.length} of {expenses.length} results</span>
           </div>
@@ -252,14 +252,14 @@ export default function AllExpenses() {
                         Paid by <strong className="text-slate-700">{expense.paid_by}</strong>
                       </span>
                       <span className="text-[10px] text-slate-300">•</span>
-                      <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1">
+                      <span className="text-[11px] font-bold text-slate-500 flex items-center gap-1">
                         <CalendarClock className="w-3.5 h-3.5" />
                         {new Date(expense.expense_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
                     </div>
 
                     {expense.notes && (
-                      <p className="text-[11px] text-slate-400 italic mt-1.5 line-clamp-1 border-l-2 border-slate-200 pl-2">
+                      <p className="text-[11px] text-slate-500 italic mt-1.5 line-clamp-1 border-l-2 border-slate-200 pl-2">
                         “{expense.notes}”
                       </p>
                     )}
@@ -273,7 +273,7 @@ export default function AllExpenses() {
                     <p className="text-xl md:text-2xl font-black text-blue-600 leading-none">
                       ₹{Number(expense.amount).toLocaleString('en-IN')}
                     </p>
-                    <span className="text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.5 rounded-full inline-block mt-2">
+                    <span className="text-[10px] font-bold text-slate-500 bg-slate-50 border border-slate-100 px-2 py-0.5 rounded-full inline-block mt-2">
                       {expense.entry_type?.replace('_', ' ')}
                     </span>
                   </div>

@@ -29,10 +29,10 @@ export default function Layout() {
       {isDemoMode && (
         <div className="relative z-50 flex items-center justify-center gap-3 px-4 py-2.5 text-xs font-semibold"
           style={{ background: 'linear-gradient(90deg, rgba(245,158,11,0.9), rgba(234,88,12,0.9))', backdropFilter: 'blur(8px)' }}>
-          <Sparkles className="w-3.5 h-3.5 text-white animate-spin" />
-          <span className="text-white">Running in <strong>Live Demo Mode</strong> (Offline Local DB)</span>
+          <Sparkles className="w-3.5 h-3.5 text-slate-800 animate-spin" />
+          <span className="text-slate-800">Running in <strong>Live Demo Mode</strong> (Offline Local DB)</span>
           <button onClick={handleToggleDemoRole}
-            className="bg-black/10 hover:bg-black/20 text-white font-extrabold px-3 py-1 rounded-full border border-white/30 transition-all active:scale-95 cursor-pointer text-[10px] uppercase tracking-widest">
+            className="bg-black/10 hover:bg-black/20 text-slate-800 font-extrabold px-3 py-1 rounded-full border border-white/30 transition-all active:scale-95 cursor-pointer text-[10px] uppercase tracking-widest">
             Switch to {profile?.role === 'admin' ? 'Member' : 'Admin'}
           </button>
         </div>
@@ -44,7 +44,7 @@ export default function Layout() {
         <Link to="/" className="flex items-center gap-3 group select-none">
           <div className="w-9 h-9 rounded-2xl flex items-center justify-center relative overflow-hidden"
             style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 4px 16px rgba(99,102,241,0.3)' }}>
-            <Gem className="w-4.5 h-4.5 text-white" />
+            <Gem className="w-4.5 h-4.5 text-slate-800" />
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           <div className="hidden sm:block">
@@ -92,7 +92,7 @@ export default function Layout() {
               onClick={() => setShowUserMenu(v => !v)}
               className="flex items-center gap-2.5 px-3 py-2 rounded-2xl cursor-pointer transition-all hover:bg-slate-100"
               style={{ border: '1px solid rgba(148, 163, 184, 0.2)' }}>
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-extrabold text-white uppercase"
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-extrabold text-slate-800 uppercase"
                 style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 2px 8px rgba(99,102,241,0.3)' }}>
                 {profile?.full_name?.charAt(0) || '?'}
               </div>
@@ -102,7 +102,7 @@ export default function Layout() {
                   {profile?.role === 'admin' ? '👑 Administrator' : 'Family Member'}
                 </p>
               </div>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 hidden sm:block" />
             </button>
 
             {showUserMenu && (
@@ -136,7 +136,7 @@ export default function Layout() {
             return (
               <Link key={item.to} to={item.to}
                 className={`flex flex-col items-center gap-1 p-2 min-w-[64px] transition-all duration-300 ${
-                  isActive ? 'text-indigo-600' : 'text-slate-400'
+                  isActive ? 'text-indigo-600' : 'text-slate-500'
                 }`}>
                 <div className={`relative transition-transform duration-300 ${isActive ? 'translate-y-[-4px]' : ''}`}>
                   <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
@@ -152,7 +152,7 @@ export default function Layout() {
           {/* Center FAB for Add Expense */}
           <div className="absolute left-1/2 -translate-x-1/2 -top-6">
             <Link to="/add"
-              className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-xl transition-transform active:scale-90"
+              className="w-14 h-14 rounded-full flex items-center justify-center text-slate-800 shadow-xl transition-transform active:scale-90"
               style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 8px 24px rgba(99,102,241,0.4)' }}>
               <PlusCircle className="w-7 h-7 stroke-2" />
             </Link>
@@ -161,7 +161,7 @@ export default function Layout() {
           {isAdmin && (
             <Link to="/admin"
               className={`flex flex-col items-center gap-1 p-2 min-w-[64px] transition-all duration-300 ${
-                location.pathname === '/admin' ? 'text-indigo-600' : 'text-slate-400'
+                location.pathname === '/admin' ? 'text-indigo-600' : 'text-slate-500'
               }`}>
               <div className={`relative transition-transform duration-300 ${location.pathname === '/admin' ? 'translate-y-[-4px]' : ''}`}>
                 <Settings className={`w-5 h-5 ${location.pathname === '/admin' ? 'stroke-[2.5]' : 'stroke-2'}`} />

@@ -130,7 +130,7 @@ export default function AddExpense() {
         <div>
           <h1 className="text-2xl font-black text-slate-800 flex items-center gap-2">
             <span>Add Wedding Expense</span>
-            <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
+            <Sparkles className="w-5 h-5 text-amber-600 animate-pulse" />
           </h1>
           <p className="text-sm font-medium mt-1">Select an entry method and input the transaction details below.</p>
         </div>
@@ -194,7 +194,7 @@ export default function AddExpense() {
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-widest pl-0.5">Amount (₹)</label>
               <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">₹</div>
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-sm">₹</div>
                 <input 
                   type="number" 
                   step="0.01" 
@@ -213,7 +213,7 @@ export default function AddExpense() {
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-widest pl-0.5">What was this for?</label>
             <div className="relative">
-              <Clipboard className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+              <Clipboard className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-500" />
               <input 
                 type="text" 
                 placeholder="e.g. Bridal make-up booking, DJ booking deposit..." 
@@ -231,7 +231,7 @@ export default function AddExpense() {
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-widest pl-0.5">Paid by (Shopper)</label>
               <div className="relative">
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-500" />
                 <input 
                   type="text" 
                   required 
@@ -247,7 +247,7 @@ export default function AddExpense() {
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-widest pl-0.5">Date of Expense</label>
               <div className="relative">
-                <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
+                <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-500" />
                 <input 
                   type="date" 
                   required 
@@ -312,7 +312,7 @@ export default function AddExpense() {
                     </div>
                     <div className="text-center">
                       <p className="text-xs font-extrabold">From Gallery</p>
-                      <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Choose image</p>
+                      <p className="text-[10px] font-semibold text-slate-500 mt-0.5">Choose image</p>
                     </div>
                   </label>
                 </div>
@@ -372,7 +372,7 @@ export default function AddExpense() {
                     </div>
                     <div className="text-center">
                       <p className="text-xs font-extrabold">From Gallery</p>
-                      <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Choose image</p>
+                      <p className="text-[10px] font-semibold text-slate-500 mt-0.5">Choose image</p>
                     </div>
                   </label>
                 </div>
@@ -384,7 +384,7 @@ export default function AddExpense() {
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-widest pl-0.5">Shopper Notes (Optional)</label>
             <div className="relative">
-              <AlignLeft className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-slate-400" />
+              <AlignLeft className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-slate-500" />
               <textarea 
                 rows={2} 
                 placeholder="Any special remarks, vendor phone numbers, or installment details..." 
@@ -398,7 +398,7 @@ export default function AddExpense() {
           <button 
             type="submit" 
             disabled={loading}
-            className="glow-btn w-full py-3.5 rounded-xl font-bold text-slate-800 text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+            className="glow-btn-white text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
               <>

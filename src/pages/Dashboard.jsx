@@ -40,7 +40,7 @@ export default function Dashboard() {
           <div className="absolute inset-0 rounded-full" style={{border:'2px solid rgba(99,102,241,0.15)'}}></div>
           <div className="absolute inset-0 rounded-full animate-spin" style={{border:'2px solid transparent',borderTopColor:'#6366f1',boxShadow:'0 0 20px rgba(99,102,241,0.4)'}}></div>
         </div>
-        <p className="text-sm font-semibold animate-pulse" style={{color:'rgba(255,255,255,0.4)'}}>Calculating wedding metrics...</p>
+        <p className="text-sm font-semibold animate-pulse" style={{color:'#64748b'}}>Calculating wedding metrics...</p>
       </div>
     );
   }
@@ -57,10 +57,10 @@ export default function Dashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black tracking-tight" style={{color:'#fff'}}>Hasheema's <span className="text-gradient-primary">Wedding</span></h1>
-          <p className="font-medium mt-1" style={{color:'rgba(255,255,255,0.4)'}}>Real-time expenditure tracking, analytics &amp; budget planning.</p>
+          <p className="font-medium mt-1" style={{color:'#64748b'}}>Real-time expenditure tracking, analytics &amp; budget planning.</p>
         </div>
         <Link to="/add"
-          className="glow-btn inline-flex items-center justify-center gap-2 text-slate-800 font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm">
+          className="glow-btn-white font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm">
           <span>➕ Record New Expense</span>
         </Link>
       </div>
@@ -77,7 +77,7 @@ export default function Dashboard() {
             </div>
           </div>
           <p className="text-3xl font-black text-slate-800 mt-5">₹{totalAmount.toLocaleString('en-IN')}</p>
-          <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400 mt-2">
+          <div className="flex items-center gap-1 text-[11px] font-bold text-slate-500 mt-2">
             <TrendingUp className="w-3.5 h-3.5 text-blue-500" />
             <span>Grand total wedding investment</span>
           </div>
@@ -92,7 +92,7 @@ export default function Dashboard() {
             </div>
           </div>
           <p className="text-3xl font-black text-slate-800 mt-5">{expenses.length}</p>
-          <div className="text-[11px] font-bold text-slate-400 mt-2">
+          <div className="text-[11px] font-bold text-slate-500 mt-2">
             <span>Logged receipts & bills</span>
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function Dashboard() {
             </div>
           </div>
           <p className="text-3xl font-black text-slate-800 mt-5">{Object.keys(byCategory).length}</p>
-          <div className="text-[11px] font-bold text-slate-400 mt-2">
+          <div className="text-[11px] font-bold text-slate-500 mt-2">
             <span>Out of 10 configured categories</span>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Dashboard() {
           <p className="text-3xl font-black text-slate-800 mt-5">
             ₹{highestExpense ? Number(highestExpense.amount).toLocaleString('en-IN') : '0'}
           </p>
-          <div className="text-[11px] font-bold text-slate-400 mt-2 truncate">
+          <div className="text-[11px] font-bold text-slate-500 mt-2 truncate">
             <span>{highestExpense ? highestExpense.description : 'No transactions recorded'}</span>
           </div>
         </div>
@@ -226,7 +226,7 @@ export default function Dashboard() {
                           <span className="text-sm">{entry.icon}</span>
                           <span>{entry.name}</span>
                         </span>
-                        <span className="text-slate-400 font-semibold">{percentage}%</span>
+                        <span className="text-slate-500 font-semibold">{percentage}%</span>
                       </div>
                       
                       {/* Custom progress bar */}
@@ -239,7 +239,7 @@ export default function Dashboard() {
                           }}
                         ></div>
                       </div>
-                      <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                      <div className="flex justify-between text-[10px] font-bold text-slate-500">
                         <span>₹{Number(entry.value).toLocaleString('en-IN')} spent</span>
                       </div>
                     </div>
@@ -279,7 +279,7 @@ export default function Dashboard() {
                             {expense.description}
                           </p>
                           <p className="text-[11px] font-semibold mt-0.5 truncate">
-                            {expense.category} · Paid by <span className="font-bold" style={{color:'rgba(255,255,255,0.5)'}}>{expense.paid_by}</span>
+                            {expense.category} · Paid by <span className="font-bold" style={{color:'#475569'}}>{expense.paid_by}</span>
                           </p>
                         </div>
                       </div>
@@ -287,7 +287,7 @@ export default function Dashboard() {
                         <p className="font-extrabold text-indigo-300 text-base">
                           ₹{Number(expense.amount).toLocaleString('en-IN')}
                         </p>
-                        <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5 block" style={{color:'rgba(255,255,255,0.4)'}}>
+                        <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5 block" style={{color:'#64748b'}}>
                           {new Date(expense.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </span>
                       </div>
