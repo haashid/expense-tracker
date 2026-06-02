@@ -70,19 +70,19 @@ export default function AdminPanel() {
     <div className="space-y-6 max-w-4xl mx-auto">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-6">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shadow-sm">
             <Shield className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-800">Admin Control Center</h1>
+            <h1 className="text-2xl font-extrabold text-white">Admin Control Center</h1>
             <p className="text-xs text-slate-400 font-medium mt-0.5">Manage family permissions and registry access.</p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-2xl px-4 py-2.5 text-slate-600 text-xs font-bold">
+          <div className="flex items-center gap-2 ' style='background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:0.625rem 1rem;color:rgba(255,255,255,0.6)' text-xs font-bold">
             <Users className="w-4 h-4 text-slate-400" />
             <span>{users.length} Registered</span>
           </div>
@@ -107,30 +107,30 @@ export default function AdminPanel() {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 gap-3 bg-white rounded-3xl border border-slate-100">
           <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-          <span className="text-xs font-bold text-slate-400">Loading family registry...</span>
+          <span className="text-xs font-bold ' style='color:rgba(255,255,255,0.4)' >Loading family registry...</span>
         </div>
       ) : (
         <div className="space-y-6">
 
           {/* ── Admins Section ── */}
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/60">
+          <div className="glass-card overflow-hidden">
+            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 ' style='background:rgba(255,255,255,0.04)' >
               <Crown className="w-4 h-4 text-amber-500" />
-              <h2 className="text-sm font-extrabold text-slate-700 uppercase tracking-widest">Administrators ({admins.length})</h2>
+              <h2 className="text-sm font-extrabold text-white/70 uppercase tracking-widest">Administrators ({admins.length})</h2>
             </div>
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-white/5">
               {admins.map(u => <UserCard key={u.id} u={u} isSelf={u.id === currentProfile?.id} isAdminUser={true} actionLoadingId={actionLoadingId} changeRole={changeRole} />)}
               {admins.length === 0 && <p className="text-xs text-slate-400 text-center py-8 font-semibold">No administrators found.</p>}
             </div>
           </div>
 
           {/* ── Members Section ── */}
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/60">
+          <div className="glass-card overflow-hidden">
+            <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 ' style='background:rgba(255,255,255,0.04)' >
               <Users className="w-4 h-4 text-blue-500" />
-              <h2 className="text-sm font-extrabold text-slate-700 uppercase tracking-widest">Family Members ({members.length})</h2>
+              <h2 className="text-sm font-extrabold text-white/70 uppercase tracking-widest">Family Members ({members.length})</h2>
             </div>
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-white/5">
               {members.map(u => <UserCard key={u.id} u={u} isSelf={u.id === currentProfile?.id} isAdminUser={false} actionLoadingId={actionLoadingId} changeRole={changeRole} />)}
               {members.length === 0 && <p className="text-xs text-slate-400 text-center py-8 font-semibold">No family members have signed up yet.</p>}
             </div>
@@ -145,7 +145,7 @@ export default function AdminPanel() {
 // ── Shared User Card (works on ALL screen sizes) ──
 function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
   return (
-    <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-slate-50/50 transition-colors">
+    <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-white/5 transition-colors">
 
       {/* Avatar + Identity */}
       <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -186,7 +186,7 @@ function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
               value={u.role}
               onChange={e => changeRole(u.id, e.target.value)}
               disabled={actionLoadingId === u.id}
-              className="text-xs font-bold border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 hover:bg-slate-100 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 min-w-[110px]"
+              className="text-xs font-bold input-glass rounded-xl px-3 py-2.5 cursor-pointer focus:outline-none disabled:opacity-50 min-w-[110px]"
             >
               <option value="member">👨‍👩‍👧 Member</option>
               <option value="admin">👑 Admin</option>

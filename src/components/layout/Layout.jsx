@@ -1,19 +1,20 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Receipt, PlusCircle, Settings, LogOut, User, Sparkles, Gem } from 'lucide-react';
+import { LayoutDashboard, Receipt, PlusCircle, Settings, LogOut, Sparkles, Gem, ChevronDown } from 'lucide-react';
 import { mockService } from '../../lib/mockService';
+import { useState } from 'react';
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/expenses', label: 'All Expenses', icon: Receipt },
+  { to: '/expenses', label: 'Expenses', icon: Receipt },
   { to: '/add', label: 'Add Expense', icon: PlusCircle },
 ];
 
 export default function Layout() {
   const { profile, isAdmin, signOut, isDemoMode, refetchProfile } = useAuth();
   const location = useLocation();
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
-  // Helper to switch roles instantly in demo mode for testing
   const handleToggleDemoRole = async () => {
     if (!isDemoMode || !profile) return;
     const newRole = profile.role === 'admin' ? 'member' : 'admin';
@@ -22,127 +23,149 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20 md:pb-0 flex flex-col font-sans">
-      
-      {/* Demo Mode Action Bar */}
+    <div className="min-h-screen pb-24 md:pb-0 flex flex-col" style={{ fontFamily: 'Inter, Plus Jakarta Sans, sans-serif' }}>
+
+      {/* ── Floating background orbs ── */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="animate-orb absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-30"
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.6) 0%, transparent 70%)' }} />
+        <div className="animate-orb absolute top-1/3 -right-40 w-80 h-80 rounded-full opacity-20"
+          style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.6) 0%, transparent 70%)', animationDelay: '4s' }} />
+        <div className="animate-orb absolute -bottom-40 left-1/3 w-96 h-96 rounded-full opacity-20"
+          style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.5) 0%, transparent 70%)', animationDelay: '8s' }} />
+      </div>
+
+      {/* ── Demo Banner ── */}
       {isDemoMode && (
-        <div className="bg-amber-500 text-white px-4 py-2 text-center text-xs font-semibold flex items-center justify-center gap-2 select-none shadow-sm z-50">
-          <Sparkles className="w-4 h-4 animate-spin text-amber-100" />
-          <span>Running in <strong>Live Demo Mode</strong> (Offline Local DB).</span>
-          <button 
-            onClick={handleToggleDemoRole}
-            className="bg-white/20 hover:bg-white/30 text-white font-extrabold px-2.5 py-0.5 rounded-full border border-white/20 transition-all active:scale-95 ml-2 cursor-pointer"
-          >
-            Switch Role to {profile?.role === 'admin' ? 'Member' : 'Admin'} (Current: {profile?.role})
+        <div className="relative z-50 flex items-center justify-center gap-3 px-4 py-2.5 text-xs font-semibold"
+          style={{ background: 'linear-gradient(90deg, rgba(245,158,11,0.9), rgba(234,88,12,0.9))', backdropFilter: 'blur(8px)' }}>
+          <Sparkles className="w-3.5 h-3.5 text-white animate-spin" />
+          <span className="text-white">Running in <strong>Live Demo Mode</strong> (Offline Local DB)</span>
+          <button onClick={handleToggleDemoRole}
+            className="bg-white/25 hover:bg-white/40 text-white font-extrabold px-3 py-1 rounded-full border border-white/30 transition-all active:scale-95 cursor-pointer text-[10px] uppercase tracking-widest">
+            Switch to {profile?.role === 'admin' ? 'Member' : 'Admin'}
           </button>
         </div>
       )}
 
-      {/* Top Navbar - Desktop Only */}
-      <nav className="bg-white/95 backdrop-blur border-b border-slate-100 px-6 py-4 flex items-center justify-between sticky top-0 z-45 shadow-sm">
-        <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:rotate-12 transition-all duration-300 shadow-sm border border-blue-100">
-              <Gem className="w-5 h-5 fill-blue-200" />
-            </div>
-            <span className="font-extrabold text-slate-800 tracking-tight text-lg">
-              Hasheema's Wedding
-            </span>
-          </Link>
+      {/* ── Top Navbar ── */}
+      <nav className="nav-glass sticky top-0 z-40 px-4 md:px-8 py-3.5 flex items-center justify-between">
+        {/* Brand */}
+        <Link to="/" className="flex items-center gap-3 group select-none">
+          <div className="w-9 h-9 rounded-2xl flex items-center justify-center relative overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 4px 16px rgba(99,102,241,0.45)' }}>
+            <Gem className="w-4.5 h-4.5 text-white" />
+            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <div className="hidden sm:block">
+            <span className="font-extrabold text-white text-base tracking-tight leading-none block">Hasheema's</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-indigo-300 leading-none">Wedding Registry</span>
+          </div>
+        </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex gap-1.5">
-            {navItems.map(item => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.to;
-              return (
-                <Link 
-                  key={item.to} 
-                  to={item.to}
-                  className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
-                    isActive
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
-                      : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-            
-            {/* Desktop Admin Link */}
-            {isAdmin && (
-              <Link 
-                to="/admin" 
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-1">
+          {navItems.map(item => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.to;
+            return (
+              <Link key={item.to} to={item.to}
                 className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
-                  location.pathname === '/admin'
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  isActive
+                    ? 'text-white'
+                    : 'text-white/50 hover:text-white/80 hover:bg-white/8'
                 }`}
-              >
-                <Settings className="w-4 h-4" />
-                <span>Admin</span>
+                style={isActive ? { background: 'rgba(99,102,241,0.25)', boxShadow: '0 0 0 1px rgba(99,102,241,0.4)' } : {}}>
+                <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-300' : ''}`} />
+                {item.label}
               </Link>
+            );
+          })}
+          {isAdmin && (
+            <Link to="/admin"
+              className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
+                location.pathname === '/admin'
+                  ? 'text-white'
+                  : 'text-white/50 hover:text-white/80 hover:bg-white/8'
+              }`}
+              style={location.pathname === '/admin' ? { background: 'rgba(99,102,241,0.25)', boxShadow: '0 0 0 1px rgba(99,102,241,0.4)' } : {}}>
+              <Settings className={`w-4 h-4 ${location.pathname === '/admin' ? 'text-indigo-300' : ''}`} />
+              Admin
+            </Link>
+          )}
+        </div>
+
+        {/* Right: User Info */}
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <button
+              onClick={() => setShowUserMenu(v => !v)}
+              className="flex items-center gap-2.5 px-3 py-2 rounded-2xl cursor-pointer transition-all hover:bg-white/8"
+              style={{ border: '1px solid rgba(255,255,255,0.1)' }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-extrabold text-white uppercase"
+                style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 2px 8px rgba(99,102,241,0.4)' }}>
+                {profile?.full_name?.charAt(0) || '?'}
+              </div>
+              <div className="hidden sm:block text-left">
+                <p className="text-xs font-bold text-white leading-tight">{profile?.full_name || 'User'}</p>
+                <p className="text-[10px] font-semibold leading-tight" style={{ color: profile?.role === 'admin' ? '#a78bfa' : 'rgba(255,255,255,0.45)' }}>
+                  {profile?.role === 'admin' ? '👑 Administrator' : 'Family Member'}
+                </p>
+              </div>
+              <ChevronDown className="w-3.5 h-3.5 text-white/40 hidden sm:block" />
+            </button>
+
+            {showUserMenu && (
+              <div className="absolute right-0 top-full mt-2 w-44 rounded-2xl overflow-hidden z-50 animate-slide-up"
+                style={{ background: 'rgba(15,12,40,0.95)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(20px)', boxShadow: '0 16px 48px rgba(0,0,0,0.5)' }}>
+                <button onClick={() => { signOut(); setShowUserMenu(false); }}
+                  className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer">
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </button>
+              </div>
             )}
           </div>
         </div>
-
-        {/* User profile dropdown & signout */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm shadow-sm">
-              {profile?.full_name?.charAt(0) || <User className="w-4 h-4" />}
-            </div>
-            <div className="hidden md:flex flex-col text-left">
-              <span className="text-sm font-bold text-slate-800 leading-none">{profile?.full_name}</span>
-              <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider mt-0.5">
-                {profile?.role === 'admin' ? '👑 Admin' : 'Family Member'}
-              </span>
-            </div>
-          </div>
-
-          <button 
-            onClick={signOut}
-            className="hidden md:flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-red-600 transition-colors border border-slate-200 px-3 py-1.5 rounded-xl bg-white hover:bg-red-50 hover:border-red-100 cursor-pointer shadow-sm"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Sign out</span>
-          </button>
-        </div>
       </nav>
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8 animate-fade-in">
+      {/* ── Main Content ── */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 md:py-10 animate-fade-in">
         <Outlet />
       </main>
 
-      {/* Bottom Navigation Bar - Mobile Only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white px-6 py-2 pb-6 flex justify-between items-center z-45 shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.08)] rounded-t-3xl">
-        <Link to="/" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
-          <LayoutDashboard className={`w-6 h-6 ${location.pathname === '/' ? 'fill-blue-50' : ''}`} />
-        </Link>
-        
-        <Link to="/expenses" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/expenses' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
-          <Receipt className={`w-6 h-6 ${location.pathname === '/expenses' ? 'fill-blue-50' : ''}`} />
-        </Link>
-
-        {/* Prominent Floating Action Button */}
-        <Link to="/add" className="relative -top-6 bg-blue-600 text-white p-4 rounded-full shadow-xl shadow-blue-600/30 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center border-4 border-white">
-          <PlusCircle className="w-7 h-7" />
-        </Link>
-
-        {isAdmin ? (
-          <Link to="/admin" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/admin' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}>
-            <Settings className={`w-6 h-6 ${location.pathname === '/admin' ? 'fill-blue-50' : ''}`} />
+      {/* ── Mobile Bottom Nav ── */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 px-4 py-2 pb-6"
+        style={{ background: 'rgba(8,11,26,0.85)', backdropFilter: 'blur(28px)', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="flex justify-around items-end relative">
+          <Link to="/" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/' ? 'text-indigo-400' : 'text-white/35 hover:text-white/60'}`}>
+            <LayoutDashboard className="w-6 h-6" />
+            <span className="text-[9px] font-bold uppercase tracking-widest">Home</span>
           </Link>
-        ) : (
-           <div className="w-10"></div> /* Spacer if not admin */
-        )}
 
-        <button onClick={signOut} className="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-red-500 transition-colors">
-          <LogOut className="w-6 h-6" />
-        </button>
+          <Link to="/expenses" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/expenses' ? 'text-indigo-400' : 'text-white/35 hover:text-white/60'}`}>
+            <Receipt className="w-6 h-6" />
+            <span className="text-[9px] font-bold uppercase tracking-widest">Ledger</span>
+          </Link>
+
+          {/* FAB */}
+          <Link to="/add" className="relative -top-5 flex items-center justify-center w-16 h-16 rounded-full transition-all active:scale-90"
+            style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 0 4px rgba(8,11,26,0.9), 0 8px 32px rgba(99,102,241,0.5)' }}>
+            <PlusCircle className="w-7 h-7 text-white" />
+          </Link>
+
+          {isAdmin ? (
+            <Link to="/admin" className={`flex flex-col items-center gap-1 p-2 transition-all ${location.pathname === '/admin' ? 'text-indigo-400' : 'text-white/35 hover:text-white/60'}`}>
+              <Settings className="w-6 h-6" />
+              <span className="text-[9px] font-bold uppercase tracking-widest">Admin</span>
+            </Link>
+          ) : <div className="w-12" />}
+
+          <button onClick={signOut} className="flex flex-col items-center gap-1 p-2 text-white/35 hover:text-red-400 transition-colors">
+            <LogOut className="w-6 h-6" />
+            <span className="text-[9px] font-bold uppercase tracking-widest">Exit</span>
+          </button>
+        </div>
       </nav>
 
     </div>

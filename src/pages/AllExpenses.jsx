@@ -67,24 +67,24 @@ export default function AllExpenses() {
     <div className="space-y-6 max-w-7xl mx-auto">
       
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-800">View Transactions</h1>
-          <p className="text-sm text-slate-400 font-medium mt-1">Audit, search, and visually manage every logged expense.</p>
+          <h1 className="text-2xl font-extrabold text-white">View Transactions</h1>
+          <p className="text-sm mt-1' style='color:rgba(255,255,255,0.4)' >Audit, search, and visually manage every logged expense.</p>
         </div>
         
         <div className="text-left md:text-right bg-blue-50 border border-blue-100 rounded-2xl px-5 py-3.5 flex flex-col justify-center">
           <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest pl-0.5">Aggregated Ledger Sum</span>
-          <p className="text-2xl font-black text-blue-700 mt-0.5">₹{totalAmount.toLocaleString('en-IN')}</p>
+          <p className="text-2xl font-black ' style='color:#818cf8' >₹{totalAmount.toLocaleString('en-IN')}</p>
         </div>
       </div>
 
       {/* Cash Flow Graph */}
       {filteredExpenses.length > 0 && !loading && (
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <div className="glass-card p-6">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-5 h-5 text-blue-500" />
-            <h2 className="text-lg font-extrabold text-slate-800">Cash Flow Trend</h2>
+            <h2 className="text-lg font-extrabold text-white">Cash Flow Trend</h2>
           </div>
           <div className="h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -110,7 +110,7 @@ export default function AllExpenses() {
       )}
 
       {/* Advanced Filters Card */}
-      <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
+      <div className="glass-card p-5 space-y-4">
         
         <div className="flex flex-col lg:flex-row gap-3">
           {/* Text Search */}
@@ -176,7 +176,7 @@ export default function AllExpenses() {
 
         {/* Info & Reset Actions */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs text-slate-400 font-bold">
-          <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-slate-500">
+          <div className="flex items-center gap-1.5 ' style='background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:9999px;padding:0.25rem 0.75rem;color:rgba(255,255,255,0.5)' >
             <Filter className="w-3.5 h-3.5" />
             <span>Showing {filteredExpenses.length} of {expenses.length} results</span>
           </div>
@@ -209,9 +209,9 @@ export default function AllExpenses() {
           <span className="text-sm font-semibold text-slate-500 animate-pulse">Syncing transactions...</span>
         </div>
       ) : filteredExpenses.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-100 p-16 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <div className="glass-card p-16 text-center">
           <span className="text-4xl inline-block mb-3">🔍</span>
-          <h3 className="text-lg font-bold text-slate-800">No matching expenses found</h3>
+          <h3 className="text-lg font-bold text-white">No matching expenses found</h3>
           <p className="text-slate-500 max-w-sm mx-auto text-sm mt-1">
             Try adjusting your search criteria, clearing filters, or extending the date ranges.
           </p>
@@ -233,7 +233,7 @@ export default function AllExpenses() {
             return (
               <div 
                 key={expense.id} 
-                className="bg-white rounded-3xl border border-slate-100 p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                className="glass-card glass-card-hover p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
               >
                 
                 {/* Mobile top: Details & Icon */}
@@ -248,7 +248,7 @@ export default function AllExpenses() {
                     </h3>
                     
                     <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <span className="text-[11px] font-semibold text-slate-500">
+                      <span className="text-[11px] font-semibold ' style='color:rgba(255,255,255,0.4)' >
                         Paid by <strong className="text-slate-700">{expense.paid_by}</strong>
                       </span>
                       <span className="text-[10px] text-slate-300">•</span>

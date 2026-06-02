@@ -35,12 +35,12 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <div className="relative w-12 h-12">
-          <div className="absolute top-0 left-0 w-full h-full border-4 border-blue-200 rounded-full"></div>
-          <div className="absolute top-0 left-0 w-full h-full border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <div className="relative w-14 h-14">
+          <div className="absolute inset-0 rounded-full" style={{border:'2px solid rgba(99,102,241,0.15)'}}></div>
+          <div className="absolute inset-0 rounded-full animate-spin" style={{border:'2px solid transparent',borderTopColor:'#6366f1',boxShadow:'0 0 20px rgba(99,102,241,0.4)'}}></div>
         </div>
-        <p className="text-sm font-semibold text-slate-500 animate-pulse">Calculating wedding metrics...</p>
+        <p className="text-sm font-semibold animate-pulse" style={{color:'rgba(255,255,255,0.4)'}}>Calculating wedding metrics...</p>
       </div>
     );
   }
@@ -56,23 +56,20 @@ export default function Dashboard() {
       {/* Header section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Hasheema's Wedding</h1>
-          <p className="text-slate-500 font-medium mt-1">Real-time expenditure tracking, analytics & budget planning.</p>
+          <h1 className="text-3xl font-black tracking-tight" style={{color:'#fff'}}>Hasheema's <span className="text-gradient-primary">Wedding</span></h1>
+          <p className="font-medium mt-1" style={{color:'rgba(255,255,255,0.4)'}}>Real-time expenditure tracking, analytics &amp; budget planning.</p>
         </div>
-        
-        <Link 
-          to="/add"
-          className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-full transition-all shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40 cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0 text-sm"
-        >
+        <Link to="/add"
+          className="glow-btn inline-flex items-center justify-center gap-2 text-white font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm">
           <span>➕ Record New Expense</span>
         </Link>
       </div>
 
       {/* Quick stats grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         
         {/* Total spent card */}
-        <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+        <div className="glass-card glass-card-hover p-5 relative overflow-hidden col-span-2 md:col-span-1">
           <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Total Spent</span>
@@ -80,7 +77,7 @@ export default function Dashboard() {
               <IndianRupee className="w-5 h-5 stroke-[2.5]" />
             </div>
           </div>
-          <p className="text-3xl font-black text-slate-900 mt-5">₹{totalAmount.toLocaleString('en-IN')}</p>
+          <p className="text-3xl font-black text-white mt-5">₹{totalAmount.toLocaleString('en-IN')}</p>
           <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400 mt-2">
             <TrendingUp className="w-3.5 h-3.5 text-blue-500" />
             <span>Grand total wedding investment</span>
@@ -88,7 +85,7 @@ export default function Dashboard() {
         </div>
 
         {/* Total transactions card */}
-        <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+        <div className="glass-card p-6 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
           <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Transactions</span>
@@ -96,14 +93,14 @@ export default function Dashboard() {
               <FileText className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-slate-900 mt-5">{expenses.length}</p>
+          <p className="text-3xl font-black text-white mt-5">{expenses.length}</p>
           <div className="text-[11px] font-bold text-slate-400 mt-2">
             <span>Logged receipts & bills</span>
           </div>
         </div>
 
         {/* Categories used card */}
-        <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+        <div className="glass-card p-6 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
           <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-purple-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-purple-600 bg-purple-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Active Segments</span>
@@ -111,14 +108,14 @@ export default function Dashboard() {
               <LayoutGrid className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-slate-900 mt-5">{Object.keys(byCategory).length}</p>
+          <p className="text-3xl font-black text-white mt-5">{Object.keys(byCategory).length}</p>
           <div className="text-[11px] font-bold text-slate-400 mt-2">
             <span>Out of 10 configured categories</span>
           </div>
         </div>
 
         {/* Highest Single Expense card */}
-        <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+        <div className="glass-card p-6 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
           <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-rose-50 rounded-full -z-10 group-hover:scale-110 transition-transform duration-300"></div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-rose-600 bg-rose-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Peak Expense</span>
@@ -126,7 +123,7 @@ export default function Dashboard() {
               <Calendar className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-slate-900 mt-5">
+          <p className="text-3xl font-black text-white mt-5">
             ₹{highestExpense ? Number(highestExpense.amount).toLocaleString('en-IN') : '0'}
           </p>
           <div className="text-[11px] font-bold text-slate-400 mt-2 truncate">
@@ -139,7 +136,7 @@ export default function Dashboard() {
       {expenses.length === 0 ? (
         <div className="bg-white rounded-3xl border border-slate-100 p-12 text-center shadow-sm">
           <span className="text-5xl inline-block mb-4">✨</span>
-          <h3 className="text-lg font-bold text-slate-800">Welcome to Hashima's Wedding Tracker</h3>
+          <h3 className="text-lg font-bold text-white">Welcome to Hashima's Wedding Tracker</h3>
           <p className="text-slate-500 max-w-md mx-auto text-sm mt-1">
             There are currently no expenses recorded. Click "Record New Expense" above to start building the registry and expense boards!
           </p>
@@ -150,10 +147,10 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             {/* Pie Chart Card */}
-            <div className="bg-white rounded-3xl border border-slate-100 p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
+            <div className="glass-card p-6 flex flex-col">
               <div className="mb-4">
-                <h2 className="font-extrabold text-slate-800 text-lg">Category Allocation</h2>
-                <p className="text-xs font-medium text-slate-400 mt-0.5">Visual allocation of wedding funds by category.</p>
+                <h2 className="font-extrabold text-white text-lg">Category Allocation</h2>
+                <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">Visual allocation of wedding funds by category.</p>
               </div>
               
               <div className="h-64 relative flex-1 flex items-center justify-center">
@@ -185,10 +182,10 @@ export default function Dashboard() {
             </div>
 
             {/* Horizontal Bar Chart breakdown */}
-            <div className="bg-white rounded-3xl border border-slate-100 p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
+            <div className="glass-card p-6 flex flex-col">
               <div className="mb-4">
-                <h2 className="font-extrabold text-slate-800 text-lg">Spending Breakdown</h2>
-                <p className="text-xs font-medium text-slate-400 mt-0.5">Horizontal representation of expenditure magnitude.</p>
+                <h2 className="font-extrabold text-white text-lg">Spending Breakdown</h2>
+                <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">Horizontal representation of expenditure magnitude.</p>
               </div>
 
               <div className="h-64 relative flex-1">
@@ -217,10 +214,10 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Category Leaderboard */}
-            <div className="bg-white rounded-3xl border border-slate-100 p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col lg:col-span-1">
+            <div className="glass-card p-6 flex flex-col lg:col-span-1">
               <div className="mb-6">
-                <h2 className="font-extrabold text-slate-800 text-lg">Budget Leaders</h2>
-                <p className="text-xs font-medium text-slate-400 mt-0.5">Categories with highest consumption.</p>
+                <h2 className="font-extrabold text-white text-lg">Budget Leaders</h2>
+                <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">Categories with highest consumption.</p>
               </div>
 
               <div className="space-y-4 flex-1">
@@ -256,11 +253,11 @@ export default function Dashboard() {
             </div>
 
             {/* Recent Expenses List */}
-            <div className="bg-white rounded-3xl border border-slate-100 p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col lg:col-span-2">
+            <div className="glass-card p-6 flex flex-col lg:col-span-2">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="font-extrabold text-slate-800 text-lg">Recent Ledger Entries</h2>
-                  <p className="text-xs font-medium text-slate-400 mt-0.5">The last 5 logged expenses in the registry.</p>
+                  <h2 className="font-extrabold text-white text-lg">Recent Ledger Entries</h2>
+                  <p className="text-xs font-medium mt-0.5' style='color:rgba(255,255,255,0.4)'">The last 5 logged expenses in the registry.</p>
                 </div>
                 
                 <Link 
@@ -272,7 +269,7 @@ export default function Dashboard() {
                 </Link>
               </div>
 
-              <div className="divide-y divide-slate-50 flex-1 flex flex-col justify-between">
+              <div className="divide-y divide-white/5 flex-1 flex flex-col justify-between">
                 {recentExpenses.map(expense => {
                   const cat = CATEGORIES.find(c => c.label === expense.category);
                   return (
@@ -282,19 +279,19 @@ export default function Dashboard() {
                           {cat?.icon || '📦'}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-extrabold text-slate-800 text-sm truncate group-hover:text-blue-600 transition-colors">
+                          <p className="font-extrabold text-white text-sm truncate group-hover:text-blue-600 transition-colors">
                             {expense.description}
                           </p>
-                          <p className="text-[11px] font-semibold text-slate-400 mt-0.5 truncate">
-                            {expense.category} · Paid by <span className="text-slate-500 font-bold">{expense.paid_by}</span>
+                          <p className="text-[11px] font-semibold mt-0.5' style='color:rgba(255,255,255,0.4)' truncate">
+                            {expense.category} · Paid by <span className="font-bold' style='color:rgba(255,255,255,0.5)'">{expense.paid_by}</span>
                           </p>
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="font-extrabold text-blue-600 text-base">
+                        <p className="font-extrabold text-indigo-300 text-base">
                           ₹{Number(expense.amount).toLocaleString('en-IN')}
                         </p>
-                        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mt-0.5 block">
+                        <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5' style='color:rgba(255,255,255,0.4)' block">
                           {new Date(expense.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </span>
                       </div>

@@ -125,19 +125,19 @@ export default function AddExpense() {
         <span className="text-sm font-bold text-slate-500">Back to Analytics</span>
       </div>
 
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 md:p-8 space-y-6">
+      <div className="glass-card p-6 md:p-8 space-y-6">
         
         <div>
-          <h1 className="text-2xl font-black text-slate-900 flex items-center gap-2">
+          <h1 className="text-2xl font-black text-white flex items-center gap-2">
             <span>Add Wedding Expense</span>
             <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
           </h1>
-          <p className="text-sm text-slate-500 font-medium mt-1">Select an entry method and input the transaction details below.</p>
+          <p className="text-sm font-medium mt-1' style='color:rgba(255,255,255,0.4)' >Select an entry method and input the transaction details below.</p>
         </div>
 
         {/* Entry Type Selector Tabs */}
         <div className="space-y-2">
-          <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Entry Type</label>
+          <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Entry Type</label>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {ENTRY_TYPES.map(type => {
               const isActive = entryType === type.value;
@@ -177,7 +177,7 @@ export default function AddExpense() {
             
             {/* Category Select */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Expense Category</label>
+              <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Expense Category</label>
               <div className="relative">
                 <select 
                   value={form.category} 
@@ -186,13 +186,13 @@ export default function AddExpense() {
                 >
                   {CATEGORIES.map(c => <option key={c.label} value={c.label}>{c.icon} {c.label}</option>)}
                 </select>
-                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">▼</div>
+                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none ' style='color:rgba(255,255,255,0.4);font-size:0.75rem' >▼</div>
               </div>
             </div>
 
             {/* Amount input */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Amount (₹)</label>
+              <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Amount (₹)</label>
               <div className="relative">
                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">₹</div>
                 <input 
@@ -211,7 +211,7 @@ export default function AddExpense() {
 
           {/* Description input */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">What was this for?</label>
+            <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">What was this for?</label>
             <div className="relative">
               <Clipboard className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
               <input 
@@ -229,7 +229,7 @@ export default function AddExpense() {
             
             {/* Paid By input */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Paid by (Shopper)</label>
+              <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Paid by (Shopper)</label>
               <div className="relative">
                 <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
                 <input 
@@ -245,7 +245,7 @@ export default function AddExpense() {
 
             {/* Date input */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Date of Expense</label>
+              <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Date of Expense</label>
               <div className="relative">
                 <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
                 <input 
@@ -263,7 +263,7 @@ export default function AddExpense() {
           {/* Screenshot Upload - CONDITIONAL: Payment */}
           {entryType === 'payment_screenshot' && (
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Payment Screenshot</label>
+              <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Payment Screenshot</label>
               
               {paymentPreview ? (
                 <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 p-2.5 max-w-xs group shadow-inner">
@@ -323,7 +323,7 @@ export default function AddExpense() {
           {/* Screenshot Upload - CONDITIONAL: Bill */}
           {entryType === 'bill_screenshot' && (
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Bill / Invoice photo</label>
+              <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Bill / Invoice photo</label>
               
               {billPreview ? (
                 <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 p-2.5 max-w-xs group shadow-inner">
@@ -382,7 +382,7 @@ export default function AddExpense() {
 
           {/* Notes input */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-0.5">Shopper Notes (Optional)</label>
+            <label className="text-xs font-bold uppercase tracking-widest' style='color:rgba(255,255,255,0.4)' pl-0.5">Shopper Notes (Optional)</label>
             <div className="relative">
               <AlignLeft className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-slate-400" />
               <textarea 
@@ -390,7 +390,7 @@ export default function AddExpense() {
                 placeholder="Any special remarks, vendor phone numbers, or installment details..." 
                 value={form.notes}
                 onChange={e => setForm({...form, notes: e.target.value})}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-semibold text-slate-700 text-sm placeholder-slate-350"
+                className="w-full pl-11 pr-4 py-3 input-glass rounded-xl focus:outline-none font-semibold text-slate-700 text-sm placeholder-slate-350"
               />
             </div>
           </div>
@@ -398,7 +398,7 @@ export default function AddExpense() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-bold hover:shadow-xl transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 shadow-blue-600/30 shadow-lg cursor-pointer text-sm"
+            className="glow-btn w-full py-3.5 rounded-xl font-bold text-white text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
               <>
