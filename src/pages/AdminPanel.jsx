@@ -74,18 +74,18 @@ export default function AdminPanel() {
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
             style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 4px 16px rgba(99,102,241,0.4)' }}>
-            <Shield className="w-6 h-6 text-white" />
+            <Shield className="w-6 h-6 text-slate-800" />
           </div>
           <div>
-            <h1 className="text-xl font-extrabold text-white">Admin Control Center</h1>
-            <p className="text-xs font-medium mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Manage family permissions and registry access.</p>
+            <h1 className="text-xl font-extrabold text-slate-800">Admin Control Center</h1>
+            <p className="text-xs font-medium mt-0.5" style={{ color: 'rgba(15, 23, 42, 0.6)' }}>Manage family permissions and registry access.</p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold"
-            style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)' }}>
-            <Users className="w-4 h-4" style={{ color: 'rgba(255,255,255,0.4)' }} />
+            style={{ background: 'rgba(15, 23, 42, 0.04)', border: '1px solid rgba(15, 23, 42, 0.08)', color: 'rgba(15, 23, 42, 0.7)' }}>
+            <Users className="w-4 h-4" style={{ color: 'rgba(15, 23, 42, 0.6)' }} />
             <span>{users.length} Registered</span>
           </div>
           <button onClick={fetchUsers}
@@ -114,16 +114,16 @@ export default function AdminPanel() {
             <div className="absolute inset-0 rounded-full" style={{ border: '2px solid rgba(99,102,241,0.15)' }}></div>
             <div className="absolute inset-0 rounded-full animate-spin" style={{ border: '2px solid transparent', borderTopColor: '#6366f1' }}></div>
           </div>
-          <span className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>Loading family registry...</span>
+          <span className="text-xs font-bold" style={{ color: 'rgba(15, 23, 42, 0.6)' }}>Loading family registry...</span>
         </div>
       ) : (
         <div className="space-y-5">
 
           {/* Admins Section */}
           <div className="glass-card overflow-hidden">
-            <div className="flex items-center gap-2 px-6 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)', background: 'rgba(245,158,11,0.06)' }}>
+            <div className="flex items-center gap-2 px-6 py-4" style={{ borderBottom: '1px solid rgba(15, 23, 42, 0.06)', background: 'rgba(245,158,11,0.06)' }}>
               <Crown className="w-4 h-4 text-amber-400" />
-              <h2 className="text-sm font-extrabold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.7)' }}>
+              <h2 className="text-sm font-extrabold uppercase tracking-widest" style={{ color: 'rgba(15, 23, 42, 0.8)' }}>
                 Administrators ({admins.length})
               </h2>
             </div>
@@ -133,16 +133,16 @@ export default function AdminPanel() {
                   isAdminUser={true} actionLoadingId={actionLoadingId} changeRole={changeRole} />
               ))}
               {admins.length === 0 && (
-                <p className="text-center py-8 text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>No administrators found.</p>
+                <p className="text-center py-8 text-xs font-semibold" style={{ color: 'rgba(15, 23, 42, 0.55)' }}>No administrators found.</p>
               )}
             </div>
           </div>
 
           {/* Members Section */}
           <div className="glass-card overflow-hidden">
-            <div className="flex items-center gap-2 px-6 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)', background: 'rgba(99,102,241,0.06)' }}>
+            <div className="flex items-center gap-2 px-6 py-4" style={{ borderBottom: '1px solid rgba(15, 23, 42, 0.06)', background: 'rgba(99,102,241,0.06)' }}>
               <Users className="w-4 h-4 text-indigo-400" />
-              <h2 className="text-sm font-extrabold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.7)' }}>
+              <h2 className="text-sm font-extrabold uppercase tracking-widest" style={{ color: 'rgba(15, 23, 42, 0.8)' }}>
                 Family Members ({members.length})
               </h2>
             </div>
@@ -152,7 +152,7 @@ export default function AdminPanel() {
                   isAdminUser={false} actionLoadingId={actionLoadingId} changeRole={changeRole} />
               ))}
               {members.length === 0 && (
-                <p className="text-center py-8 text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.3)' }}>No family members have signed up yet.</p>
+                <p className="text-center py-8 text-xs font-semibold" style={{ color: 'rgba(15, 23, 42, 0.55)' }}>No family members have signed up yet.</p>
               )}
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function AdminPanel() {
 function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
   return (
     <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 transition-colors"
-      style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}
+      style={{ borderBottom: '1px solid rgba(15, 23, 42, 0.04)' }}
       onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
       onMouseOut={e => e.currentTarget.style.background = 'transparent'}>
 
@@ -180,7 +180,7 @@ function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-1.5">
-            <p className="font-extrabold text-sm text-white">{u.full_name}</p>
+            <p className="font-extrabold text-sm text-slate-800">{u.full_name}</p>
             {isSelf && (
               <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full uppercase"
                 style={{ background: 'rgba(99,102,241,0.2)', color: '#a78bfa', border: '1px solid rgba(99,102,241,0.3)' }}>
@@ -195,7 +195,7 @@ function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
                 : { background: 'rgba(99,102,241,0.12)', color: '#a78bfa' }}>
               {isAdminUser ? '👑 Admin' : '👨‍👩‍👧 Member'}
             </span>
-            <span className="text-[10px] font-semibold flex items-center gap-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <span className="text-[10px] font-semibold flex items-center gap-1" style={{ color: 'rgba(15, 23, 42, 0.55)' }}>
               <CalendarClock className="w-3 h-3" />
               Joined {new Date(u.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
@@ -207,7 +207,7 @@ function UserCard({ u, isSelf, isAdminUser, actionLoadingId, changeRole }) {
       <div className="flex items-center gap-2 self-end sm:self-auto">
         {isSelf ? (
           <span className="text-[10px] font-bold flex items-center gap-1 px-3 py-2 rounded-xl"
-            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.3)' }}>
+            style={{ background: 'rgba(15, 23, 42, 0.03)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(15, 23, 42, 0.55)' }}>
             <ShieldAlert className="w-3.5 h-3.5" /> Self-lock
           </span>
         ) : (

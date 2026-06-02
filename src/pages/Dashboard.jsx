@@ -60,7 +60,7 @@ export default function Dashboard() {
           <p className="font-medium mt-1" style={{color:'rgba(255,255,255,0.4)'}}>Real-time expenditure tracking, analytics &amp; budget planning.</p>
         </div>
         <Link to="/add"
-          className="glow-btn inline-flex items-center justify-center gap-2 text-white font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm">
+          className="glow-btn inline-flex items-center justify-center gap-2 text-slate-800 font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm">
           <span>➕ Record New Expense</span>
         </Link>
       </div>
@@ -76,7 +76,7 @@ export default function Dashboard() {
               <IndianRupee className="w-5 h-5 stroke-[2.5]" />
             </div>
           </div>
-          <p className="text-3xl font-black text-white mt-5">₹{totalAmount.toLocaleString('en-IN')}</p>
+          <p className="text-3xl font-black text-slate-800 mt-5">₹{totalAmount.toLocaleString('en-IN')}</p>
           <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400 mt-2">
             <TrendingUp className="w-3.5 h-3.5 text-blue-500" />
             <span>Grand total wedding investment</span>
@@ -91,7 +91,7 @@ export default function Dashboard() {
               <FileText className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-white mt-5">{expenses.length}</p>
+          <p className="text-3xl font-black text-slate-800 mt-5">{expenses.length}</p>
           <div className="text-[11px] font-bold text-slate-400 mt-2">
             <span>Logged receipts & bills</span>
           </div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
               <LayoutGrid className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-white mt-5">{Object.keys(byCategory).length}</p>
+          <p className="text-3xl font-black text-slate-800 mt-5">{Object.keys(byCategory).length}</p>
           <div className="text-[11px] font-bold text-slate-400 mt-2">
             <span>Out of 10 configured categories</span>
           </div>
@@ -119,7 +119,7 @@ export default function Dashboard() {
               <Calendar className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-black text-white mt-5">
+          <p className="text-3xl font-black text-slate-800 mt-5">
             ₹{highestExpense ? Number(highestExpense.amount).toLocaleString('en-IN') : '0'}
           </p>
           <div className="text-[11px] font-bold text-slate-400 mt-2 truncate">
@@ -132,7 +132,7 @@ export default function Dashboard() {
       {expenses.length === 0 ? (
         <div className="bg-white rounded-3xl border border-slate-100 p-12 text-center shadow-sm">
           <span className="text-5xl inline-block mb-4">✨</span>
-          <h3 className="text-lg font-bold text-white">Welcome to Hashima's Wedding Tracker</h3>
+          <h3 className="text-lg font-bold text-slate-800">Welcome to Hashima's Wedding Tracker</h3>
           <p className="text-slate-500 max-w-md mx-auto text-sm mt-1">
             There are currently no expenses recorded. Click "Record New Expense" above to start building the registry and expense boards!
           </p>
@@ -145,7 +145,7 @@ export default function Dashboard() {
             {/* Pie Chart Card */}
             <div className="glass-card p-6 flex flex-col">
               <div className="mb-4">
-                <h2 className="font-extrabold text-white text-lg">Category Allocation</h2>
+                <h2 className="font-extrabold text-slate-800 text-lg">Category Allocation</h2>
                 <p className="text-xs font-medium mt-0.5">Visual allocation of wedding funds by category.</p>
               </div>
               
@@ -170,7 +170,7 @@ export default function Dashboard() {
                     </Pie>
                     <Tooltip 
                       formatter={(v) => `₹${Number(v).toLocaleString('en-IN')}`}
-                      contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
+                      contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#1e293b', fontSize: '12px', fontWeight: 'bold' }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -180,7 +180,7 @@ export default function Dashboard() {
             {/* Horizontal Bar Chart breakdown */}
             <div className="glass-card p-6 flex flex-col">
               <div className="mb-4">
-                <h2 className="font-extrabold text-white text-lg">Spending Breakdown</h2>
+                <h2 className="font-extrabold text-slate-800 text-lg">Spending Breakdown</h2>
                 <p className="text-xs font-medium mt-0.5">Horizontal representation of expenditure magnitude.</p>
               </div>
 
@@ -192,7 +192,7 @@ export default function Dashboard() {
                     <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 11, fontWeight: 'bold', fill: '#475569' }} axisLine={false} tickLine={false} />
                     <Tooltip 
                       formatter={(v) => `₹${Number(v).toLocaleString('en-IN')}`}
-                      contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
+                      contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#1e293b', fontSize: '12px', fontWeight: 'bold' }}
                     />
                     <Bar dataKey="value" fill="#3b82f6" radius={[0, 8, 8, 0]}>
                       {chartData.map((entry, index) => (
@@ -212,7 +212,7 @@ export default function Dashboard() {
             {/* Category Leaderboard */}
             <div className="glass-card p-6 flex flex-col lg:col-span-1">
               <div className="mb-6">
-                <h2 className="font-extrabold text-white text-lg">Budget Leaders</h2>
+                <h2 className="font-extrabold text-slate-800 text-lg">Budget Leaders</h2>
                 <p className="text-xs font-medium mt-0.5">Categories with highest consumption.</p>
               </div>
 
@@ -252,7 +252,7 @@ export default function Dashboard() {
             <div className="glass-card p-6 flex flex-col lg:col-span-2">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="font-extrabold text-white text-lg">Recent Ledger Entries</h2>
+                  <h2 className="font-extrabold text-slate-800 text-lg">Recent Ledger Entries</h2>
                   <p className="text-xs font-medium mt-0.5">The last 5 logged expenses in the registry.</p>
                 </div>
                 
@@ -275,7 +275,7 @@ export default function Dashboard() {
                           {cat?.icon || '📦'}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-extrabold text-white text-sm truncate group-hover:text-blue-600 transition-colors">
+                          <p className="font-extrabold text-slate-800 text-sm truncate group-hover:text-blue-600 transition-colors">
                             {expense.description}
                           </p>
                           <p className="text-[11px] font-semibold mt-0.5 truncate">

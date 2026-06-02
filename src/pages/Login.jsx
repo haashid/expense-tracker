@@ -81,10 +81,10 @@ export default function Login() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-5 relative animate-float"
             style={{ background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)', boxShadow: '0 8px 40px rgba(99,102,241,0.5), 0 0 0 1px rgba(255,255,255,0.1)' }}>
-            <Gem className="w-9 h-9 text-white" />
+            <Gem className="w-9 h-9 text-slate-800" />
             <div className="absolute inset-0 rounded-3xl" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%)' }} />
           </div>
-          <h1 className="text-4xl font-black text-white tracking-tight leading-none">Hasheema's</h1>
+          <h1 className="text-4xl font-black text-slate-800 tracking-tight leading-none">Hasheema's</h1>
           <p className="text-lg font-semibold mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>Wedding Expense Registry</p>
           {isDemoMode && (
             <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-full text-[11px] font-bold"
@@ -104,8 +104,8 @@ export default function Login() {
               <button key={tab} onClick={() => { setIsSignUp(i === 1); setError(''); setSuccess(''); }}
                 className="flex-1 py-2.5 text-sm font-bold rounded-xl transition-all cursor-pointer"
                 style={isSignUp === (i === 1)
-                  ? { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }
-                  : { color: 'rgba(255,255,255,0.4)' }}>
+                  ? { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#1e293b', boxShadow: '0 4px 12px rgba(99,102,241,0.4)' }
+                  : { color: 'rgba(15, 23, 42, 0.6)' }}>
                 {tab}
               </button>
             ))}
@@ -128,33 +128,33 @@ export default function Login() {
 
           {/* Divider */}
           <div className="flex items-center gap-3 mb-5">
-            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
-            <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.3)' }}>or email</span>
-            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
+            <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42, 0.05)' }} />
+            <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: 'rgba(15, 23, 42, 0.55)' }}>or email</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(15, 23, 42, 0.05)' }} />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {isSignUp && (
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(15, 23, 42, 0.55)' }} />
                 <input type="text" placeholder="Full Name" required value={fullName} onChange={e => setFullName(e.target.value)}
                   className="input-glass w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm font-medium" />
               </div>
             )}
 
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(15, 23, 42, 0.55)' }} />
               <input type="email" placeholder="Email address" required value={email} onChange={e => setEmail(e.target.value)}
                 className="input-glass w-full pl-11 pr-4 py-3.5 rounded-2xl text-sm font-medium" />
             </div>
 
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(15, 23, 42, 0.55)' }} />
               <input type={showPassword ? 'text' : 'password'} placeholder="Password" required value={password} onChange={e => setPassword(e.target.value)}
                 className="input-glass w-full pl-11 pr-12 py-3.5 rounded-2xl text-sm font-medium" />
               <button type="button" onClick={() => setShowPassword(v => !v)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer opacity-40 hover:opacity-80 transition-opacity">
-                {showPassword ? <EyeOff className="w-4 h-4 text-white" /> : <Eye className="w-4 h-4 text-white" />}
+                {showPassword ? <EyeOff className="w-4 h-4 text-slate-800" /> : <Eye className="w-4 h-4 text-slate-800" />}
               </button>
             </div>
 
@@ -172,9 +172,9 @@ export default function Login() {
             )}
 
             <button type="submit" disabled={loading}
-              className="glow-btn w-full py-3.5 rounded-2xl font-bold text-white text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer">
+              className="glow-btn w-full py-3.5 rounded-2xl font-bold text-slate-800 text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer">
               {loading ? (
-                <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin h-5 w-5 text-slate-800" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                 </svg>
@@ -188,7 +188,7 @@ export default function Login() {
           {isDemoMode && (
             <button onClick={() => handleQuickLogin('family@wedding.com')} disabled={loading}
               className="w-full mt-4 py-3 rounded-2xl text-xs font-bold cursor-pointer transition-all"
-              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)' }}
+              style={{ background: 'rgba(15, 23, 42, 0.03)', border: '1px solid rgba(15, 23, 42, 0.08)', color: 'rgba(15, 23, 42, 0.65)' }}
               onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
               onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}>
               👨‍👩‍👧 Quick Demo — Family Member Access
@@ -196,7 +196,7 @@ export default function Login() {
           )}
         </div>
 
-        <p className="text-center text-xs mt-5 flex flex-col items-center gap-2" style={{ color: 'rgba(255,255,255,0.3)' }}>
+        <p className="text-center text-xs mt-5 flex flex-col items-center gap-2" style={{ color: 'rgba(15, 23, 42, 0.55)' }}>
           <span className="flex items-center gap-1.5"><Lock className="w-3 h-3" />Access restricted to invited family members</span>
           <Link to="/login/admin" className="font-bold transition-colors" style={{ color: 'rgba(167,139,250,0.7)' }}
             onMouseOver={e => e.currentTarget.style.color = '#a78bfa'} onMouseOut={e => e.currentTarget.style.color = 'rgba(167,139,250,0.7)'}>

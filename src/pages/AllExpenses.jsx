@@ -69,7 +69,7 @@ export default function AllExpenses() {
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6">
         <div>
-          <h1 className="text-2xl font-extrabold text-white">View Transactions</h1>
+          <h1 className="text-2xl font-extrabold text-slate-800">View Transactions</h1>
           <p className="text-sm mt-1" style={{color:'rgba(255,255,255,0.4)'}}>Audit, search, and visually manage every logged expense.</p>
         </div>
         
@@ -84,7 +84,7 @@ export default function AllExpenses() {
         <div className="glass-card p-6">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-5 h-5 text-blue-500" />
-            <h2 className="text-lg font-extrabold text-white">Cash Flow Trend</h2>
+            <h2 className="text-lg font-extrabold text-slate-800">Cash Flow Trend</h2>
           </div>
           <div className="h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -100,7 +100,7 @@ export default function AllExpenses() {
                 <YAxis tickFormatter={(v) => `₹${(v/1000).toFixed(0)}k`} tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }} axisLine={false} tickLine={false} />
                 <Tooltip 
                   formatter={(v) => `₹${Number(v).toLocaleString('en-IN')}`}
-                  contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
+                  contentStyle={{ background: '#1e293b', border: 'none', borderRadius: '12px', color: '#1e293b', fontSize: '12px', fontWeight: 'bold' }}
                 />
                 <Area type="monotone" dataKey="amount" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorAmount)" />
               </AreaChart>
@@ -211,13 +211,13 @@ export default function AllExpenses() {
       ) : filteredExpenses.length === 0 ? (
         <div className="glass-card p-16 text-center">
           <span className="text-4xl inline-block mb-3">🔍</span>
-          <h3 className="text-lg font-bold text-white">No matching expenses found</h3>
+          <h3 className="text-lg font-bold text-slate-800">No matching expenses found</h3>
           <p className="text-slate-500 max-w-sm mx-auto text-sm mt-1">
             Try adjusting your search criteria, clearing filters, or extending the date ranges.
           </p>
           <button 
             onClick={handleResetFilters}
-            className="mt-4 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-full transition-all shadow-md shadow-blue-600/30 cursor-pointer"
+            className="mt-4 text-xs font-bold text-slate-800 bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-full transition-all shadow-md shadow-blue-600/30 cursor-pointer"
           >
             Clear Filters
           </button>
@@ -283,7 +283,7 @@ export default function AllExpenses() {
                     {expense.payment_screenshot_url && (
                       <button 
                         onClick={() => setImageModal({ url: expense.payment_screenshot_url, type: 'Payment Screenshot' })}
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-blue-600 bg-blue-50 border border-blue-100 hover:bg-blue-600 hover:text-white transition-colors shadow-sm cursor-pointer"
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-blue-600 bg-blue-50 border border-blue-100 hover:bg-blue-600 hover:text-slate-800 transition-colors shadow-sm cursor-pointer"
                         title="View Payment Receipt"
                       >
                         <Camera className="w-4 h-4" />
@@ -293,7 +293,7 @@ export default function AllExpenses() {
                     {expense.bill_screenshot_url && (
                       <button 
                         onClick={() => setImageModal({ url: expense.bill_screenshot_url, type: 'Invoice Bill Photo' })}
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-emerald-600 bg-emerald-50 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-colors shadow-sm cursor-pointer"
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-emerald-600 bg-emerald-50 border border-emerald-100 hover:bg-emerald-600 hover:text-slate-800 transition-colors shadow-sm cursor-pointer"
                         title="View Invoice"
                       >
                         <FileText className="w-4 h-4" />
@@ -305,7 +305,7 @@ export default function AllExpenses() {
                       <button 
                         onClick={() => handleDelete(expense.id)}
                         disabled={deletingId === expense.id}
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-red-500 bg-red-50 border border-red-100 hover:bg-red-500 hover:text-white transition-colors shadow-sm cursor-pointer disabled:opacity-50"
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-red-500 bg-red-50 border border-red-100 hover:bg-red-500 hover:text-slate-800 transition-colors shadow-sm cursor-pointer disabled:opacity-50"
                         title="Delete this record"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -328,7 +328,7 @@ export default function AllExpenses() {
         >
           <div className="max-w-3xl w-full flex flex-col items-center relative gap-3">
             
-            <div className="flex items-center justify-between w-full bg-slate-900/50 border border-slate-700/30 backdrop-blur rounded-2xl px-4 py-2.5 text-white">
+            <div className="flex items-center justify-between w-full bg-slate-900/50 border border-slate-700/30 backdrop-blur rounded-2xl px-4 py-2.5 text-slate-800">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-350">{imageModal.type}</span>
               <button 
                 onClick={() => setImageModal(null)}
