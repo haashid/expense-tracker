@@ -206,10 +206,15 @@ export function AuthProvider({ children }) {
   }
 
   async function signOut() {
-    if (isSupabaseConfigured) {
-      await supabase.auth.signOut();
-    } else {
-      await mockService.auth.signOut();
+    try {
+      if (isSupabaseConfigured) {
+        await supabase.auth.signOut();
+      } else {
+        await mockService.auth.signOut();
+      }
+    } catch (err) {
+      console.warn('Error during signOut, forcing local state clear:', err);
+    } finally {
       setUser(null);
       setProfile(null);
     }
