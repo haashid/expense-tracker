@@ -54,22 +54,22 @@ export default function Dashboard() {
     <div className="space-y-8 max-w-7xl mx-auto">
       
       {/* Header section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black tracking-tight" style={{color:'#fff'}}>Hasheema's <span className="text-gradient-primary">Wedding</span></h1>
-          <p className="font-medium mt-1" style={{color:'#64748b'}}>Real-time expenditure tracking, analytics &amp; budget planning.</p>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">Hasheema's <span className="text-gradient-primary">Wedding</span></h1>
+          <p className="font-medium mt-1 text-slate-500 text-sm sm:text-base">Real-time expenditure tracking, analytics &amp; budget planning.</p>
         </div>
         <Link to="/add"
-          className="glow-btn-white font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm">
+          className="glow-btn font-bold px-6 py-3.5 rounded-full cursor-pointer text-sm inline-flex items-center justify-center whitespace-nowrap">
           <span>➕ Record New Expense</span>
         </Link>
       </div>
 
       {/* Quick stats grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* Total spent card */}
-        <div className="glass-card glass-card-hover p-5 relative overflow-hidden col-span-2 md:col-span-1">
+        <div className="glass-card glass-card-hover p-5 relative overflow-hidden">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full uppercase tracking-wider">Total Spent</span>
             <div className="w-10 h-10 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-700">
@@ -284,7 +284,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="font-extrabold text-indigo-300 text-base">
+                        <p className="font-extrabold text-slate-900 text-base">
                           ₹{Number(expense.amount).toLocaleString('en-IN')}
                         </p>
                         <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5 block" style={{color:'#64748b'}}>

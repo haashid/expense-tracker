@@ -73,9 +73,9 @@ export default function AllExpenses() {
           <p className="text-sm mt-1" style={{color:'#64748b'}}>Audit, search, and visually manage every logged expense.</p>
         </div>
         
-        <div className="text-left md:text-right rounded-2xl px-5 py-3.5 flex flex-col justify-center" style={{background:'rgba(99,102,241,0.12)',border:'1px solid rgba(99,102,241,0.25)'}}>
-          <span className="text-[10px] font-bold uppercase tracking-widest" style={{color:'rgba(167,139,250,0.7)'}}>Aggregated Ledger Sum</span>
-          <p className="text-2xl font-black" style={{color:'#a78bfa'}}>₹{totalAmount.toLocaleString('en-IN')}</p>
+        <div className="text-left md:text-right rounded-2xl px-5 py-3.5 flex flex-col justify-center bg-indigo-50 border border-indigo-100">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Aggregated Ledger Sum</span>
+          <p className="text-2xl font-black text-indigo-700">₹{totalAmount.toLocaleString('en-IN')}</p>
         </div>
       </div>
 
